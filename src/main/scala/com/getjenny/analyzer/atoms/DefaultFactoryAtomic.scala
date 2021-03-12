@@ -1,10 +1,10 @@
-package com.getjenny.analyzer.atoms
+package io.elegans.analyzer.atoms
 
 /**
   * Created by mal on 20/02/2017.
   */
 
-import com.getjenny.analyzer.interfaces._
+import io.elegans.analyzer.interfaces._
 
 class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], AbstractAtomic, Map[String, String]] {
 
@@ -12,6 +12,7 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], AbstractAtom
     "similar",
     "synonym",
     "regex",
+    "lastTravStateIs",
     "matchPatternRegex",
     "matchDateDDMMYYYY",
     "existsVariable",
@@ -34,6 +35,7 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], AbstractAtom
   AbstractAtomic = name.filter(c => !c.isWhitespace ) match {
     case "keyword" => new KeywordAtomic(argument, restrictedArgs)
     case "regex" => new RegularExpressionAtomic(argument, restrictedArgs)
+    case "lastTravStateIs" => new LastTravStateIsAtomic(argument, restrictedArgs)
     case "matchPatternRegex" => new MatchPatternRegexAtomic(argument, restrictedArgs)
     case "matchDateDDMMYYYY" => new MatchDateDDMMYYYYAtomic(argument, restrictedArgs)
     case "existsVariable" => new ExistsVariableAtomic(argument, restrictedArgs)

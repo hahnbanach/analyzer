@@ -1,10 +1,10 @@
-package com.getjenny.analyzer.atoms
+package io.elegans.analyzer.atoms
 
 /**
   * Created by angelo on 19/10/18.
   */
 
-import com.getjenny.analyzer.expressions.{AnalyzersDataInternal, Result}
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
 
 /** Double Atomic
   *

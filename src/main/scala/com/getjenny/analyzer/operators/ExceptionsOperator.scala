@@ -1,7 +1,7 @@
-package com.getjenny.analyzer.operators
+package io.elegans.analyzer.operators
 
 /**
-  * Created by Angelo Leto <angelo@getjenny.com> on 03/03/17.
+  * Created by Angelo Leto <angelo.leto@elegans.io> on 03/03/17.
   */
 
 case class OperatorException(message: String = "", cause: Throwable = None.orNull)

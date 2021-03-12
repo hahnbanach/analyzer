@@ -1,8 +1,10 @@
-package com.getjenny.analyzer.operators
+package io.elegans.analyzer.operators
 
-import com.getjenny.analyzer.expressions._
-import scalaz._
-import Scalaz._
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
+import io.elegans.analyzer.expressions._
+import scalaz.Scalaz._
+
+import scala.math.Ordering.Double.equiv
 
 /** Binarize Operator
   *
@@ -39,6 +41,23 @@ class BinarizeOperator(child: List[Expression]) extends AbstractOperator(child: 
       case Some(arg) => arg.matches(query, data)
       case _ => throw OperatorException("BinarizeOperator: inner expression is empty")
     }
-    Result(score=if (res.score > 0.0 ) 1.0 else 0.0, data = res.data)
+    if (equiv(res.score, 0.0d))
+      Result(
+        score = 0.0d,
+        data = data
+      )
+    else
+      Result(
+        score = 1.0d,
+        AnalyzersDataInternal(
+          context = data.context,
+          stateData = StateVariables(
+            traversedStates = data.stateData.traversedStates,
+            variables = data.stateData.variables ++
+              res.data.stateData.variables
+          ),
+          data = data.data ++ res.data.data
+        )
+      )
   }
 }

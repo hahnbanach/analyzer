@@ -1,6 +1,6 @@
-package com.getjenny.analyzer.analyzers
+package io.elegans.analyzer.analyzers
 
-import com.getjenny.analyzer.expressions.{AnalyzersDataInternal, Result}
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
 
 /**
   * Created by mal on 20/02/2017.

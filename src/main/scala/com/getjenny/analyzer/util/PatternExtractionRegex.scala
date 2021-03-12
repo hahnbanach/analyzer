@@ -1,7 +1,7 @@
-package com.getjenny.analyzer.util
+package io.elegans.analyzer.util
 
 /**
-  * Created by Angelo Leto <angelo@getjenny.com> on 23/06/17.
+  * Created by Angelo Leto <angelo.leto@elegans.io> on 23/06/17.
   */
 
 import java.util.regex.PatternSyntaxException

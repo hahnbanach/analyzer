@@ -1,6 +1,6 @@
-package com.getjenny.analyzer.atoms
+package io.elegans.analyzer.atoms
 
-import com.getjenny.analyzer.expressions._
+import io.elegans.analyzer.expressions._
 
 /**
   * Created by mal on 20/02/2017.

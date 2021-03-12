@@ -1,6 +1,6 @@
-package com.getjenny.analyzer.operators
+package io.elegans.analyzer.operators
 
-import com.getjenny.analyzer.expressions._
+import io.elegans.analyzer.expressions._
 
 /** Operators are built to be nested through the add method.
   *
@@ -23,7 +23,7 @@ import com.getjenny.analyzer.expressions._
   * When add(atomic1, 2) is called, atomic1 is added as head of the children in operator2,
   * which was just added as head of the children of op1, which was added as the head of disjunction.
   *
-  * Created by mario@getjenny.com on 21/02/2017.
+  * Created by mario.alemi@elegans.io on 21/02/2017.
   *
   */
 abstract class AbstractOperator(children: List[Expression]) extends Expression(children) {

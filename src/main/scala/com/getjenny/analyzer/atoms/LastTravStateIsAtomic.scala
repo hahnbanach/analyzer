@@ -1,6 +1,6 @@
-package com.getjenny.analyzer.atoms
+package io.elegans.analyzer.atoms
 
-import com.getjenny.analyzer.expressions.{AnalyzersDataInternal, Result}
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
 
 /**
   * Created by angelo on 16/08/17.
@@ -28,9 +28,9 @@ class LastTravStateIsAtomic(val arguments: List[String], restrictedArgs: Map[Str
     * @return Result with 1.0 if the last state is <name> score = 0.0 otherwise
     */
   def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
-    data.traversedStates.lastOption match {
+    data.stateData.traversedStates.lastOption match {
       case Some(t) =>
-        t match {
+        t.state match {
           case `name` => Result(score = 1.0)
           case _ => Result(score = 0.0)
         }

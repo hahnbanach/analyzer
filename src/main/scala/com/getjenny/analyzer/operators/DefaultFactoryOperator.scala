@@ -1,11 +1,11 @@
-package com.getjenny.analyzer.operators
+package io.elegans.analyzer.operators
 
 /**
-  * Created by Angelo Leto <angelo@getjenny.com> on 03/03/17.
+  * Created by Angelo Leto <angelo.leto@elegans.io> on 03/03/17.
   */
 
-import com.getjenny.analyzer.expressions.Expression
-import com.getjenny.analyzer.interfaces._
+import io.elegans.analyzer.expressions.Expression
+import io.elegans.analyzer.interfaces._
 
 class DefaultFactoryOperator extends OperatorFactoryTrait[List[Expression], AbstractOperator] {
 

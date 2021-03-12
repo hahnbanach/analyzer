@@ -1,8 +1,8 @@
-package com.getjenny.analyzer.operators
+package io.elegans.analyzer.operators
 
-import com.getjenny.analyzer.expressions._
-import scalaz._
-import Scalaz._
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
+import io.elegans.analyzer.expressions._
+import scalaz.Scalaz._
 
 /** Compare Operator
   *
@@ -49,9 +49,12 @@ class GteOperator(child: List[Expression]) extends AbstractOperator(child: List[
     val res2: Result = secondArgument.evaluate(query = query, data = data)
     val score = if(res1.score >= res2.score) 1.0 else 0.0
     val resData = AnalyzersDataInternal(
-      traversedStates = res1.data.traversedStates,
       context = res1.data.context,
-      extractedVariables = res1.data.extractedVariables ++ res2.data.extractedVariables,
+      stateData = StateVariables(
+        traversedStates = res1.data.stateData.traversedStates,
+        variables = res1.data.stateData.variables ++
+          res2.data.stateData.variables
+      ),
       data = res1.data.data ++ res2.data.data
     )
     Result(score=score, data = resData)

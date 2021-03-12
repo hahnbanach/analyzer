@@ -1,4 +1,4 @@
-package com.getjenny.analyzer.entities
+package io.elegans.analyzer.entities
 
 /**
   * Created by angelo on 13/02/2019.

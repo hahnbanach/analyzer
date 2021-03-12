@@ -1,10 +1,10 @@
-package com.getjenny.analyzer.util
+package io.elegans.analyzer.util
 
 /**
   * Created by Angelo on 05/07/2018.
   */
 
-import com.getjenny.analyzer.atoms.ExceptionAtomic
+import io.elegans.analyzer.atoms.ExceptionAtomic
 
 object ComparisonOperators {
   def compare(x: Long, y: Long, operator: String): Boolean = operator match {

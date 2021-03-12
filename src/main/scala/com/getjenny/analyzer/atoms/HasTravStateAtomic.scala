@@ -1,6 +1,6 @@
-package com.getjenny.analyzer.atoms
+package io.elegans.analyzer.atoms
 
-import com.getjenny.analyzer.expressions.{AnalyzersDataInternal, Result}
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
 
 /**
   * Created by angelo on 16/08/17.
@@ -30,7 +30,7 @@ class HasTravStateAtomic(val arguments: List[String], restrictedArgs: Map[String
     * @return Result with 1.0 if the state exists score = 0.0 otherwise
     */
   def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
-    if(data.traversedStates.contains(name)) {
+    if(data.stateData.traversedStates.map(s => s.state).contains(name)) {
       Result(score = 1.0)
     } else {
       Result(score = 0.0)

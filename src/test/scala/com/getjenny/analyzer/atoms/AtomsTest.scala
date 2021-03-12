@@ -1,12 +1,13 @@
-package com.getjenny.analyzer.atoms
+package io.elegans.analyzer.atoms
 
 /**
-  * Created by Angelo Leto <angelo@getjenny.com> on 03/03/17.
+  * Created by Angelo Leto <angelo.leto@elegans.io> on 03/03/17.
   */
 
-import org.scalatest._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class AtomsTest extends FlatSpec with Matchers {
+class AtomsTest extends AnyFlatSpec with Matchers {
 
   val restrictedArgs = Map.empty[String, String]
 

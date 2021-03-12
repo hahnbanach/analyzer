@@ -1,13 +1,13 @@
-package com.getjenny.analyzer.analyzers
+package io.elegans.analyzer.analyzers
 
 /**
-  * Created by Angelo Leto <angelo@getjenny.com> on 03/03/17.
+  * Created by Angelo Leto <angelo.leto@elegans.io> on 03/03/17.
   */
 
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-import org.scalatest._
-
-class GenericAnalyzersTest extends FlatSpec with Matchers {
+class GenericAnalyzersTest extends AnyFlatSpec with Matchers {
 
   val restrictedArgs = Map.empty[String, String]
   "A DefaultAnalyzer" should "parse a rule and evaluate the operations on a provided input text" in {

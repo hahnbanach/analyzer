@@ -1,4 +1,4 @@
-package com.getjenny.analyzer.util
+package io.elegans.analyzer.util
 
 /**
   * Created by mal on 20/02/2017.

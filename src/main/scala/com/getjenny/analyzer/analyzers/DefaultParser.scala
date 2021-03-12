@@ -1,13 +1,14 @@
-package com.getjenny.analyzer.analyzers
+package io.elegans.analyzer.analyzers
 
 /**
   * Created by mal on 20/02/2017.
   */
 
-import com.getjenny.analyzer.atoms._
-import com.getjenny.analyzer.expressions.{AnalyzersDataInternal, Expression, Result}
-import com.getjenny.analyzer.interfaces.{AtomicFactoryTrait, OperatorFactoryTrait}
-import com.getjenny.analyzer.operators._
+import io.elegans.analyzer.atoms._
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
+import io.elegans.analyzer.expressions.Expression
+import io.elegans.analyzer.interfaces.{AtomicFactoryTrait, OperatorFactoryTrait}
+import io.elegans.analyzer.operators._
 
 import scala.util.control.NonFatal
 import scala.util.Try

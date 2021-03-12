@@ -1,7 +1,7 @@
-package com.getjenny.analyzer.analyzers
+package io.elegans.analyzer.analyzers
 
 /**
-  * Created by Angelo Leto <angelo@getjenny.com> on 03/03/17.
+  * Created by Angelo Leto <angelo.leto@elegans.io> on 03/03/17.
   */
 
 case class AnalyzerInitializationException(message: String = "", cause: Throwable = None.orNull)

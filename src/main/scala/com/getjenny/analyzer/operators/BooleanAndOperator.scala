@@ -1,8 +1,8 @@
-package com.getjenny.analyzer.operators
+package io.elegans.analyzer.operators
 
-import com.getjenny.analyzer.expressions._
-import scalaz._
-import Scalaz._
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
+import io.elegans.analyzer.expressions._
+import scalaz.Scalaz._
 
 /**
   * Created by mal on 21/02/2017.
@@ -26,27 +26,45 @@ class BooleanAndOperator(children: List[Expression]) extends AbstractOperator(ch
   }
 
   def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
-    def loop(l: List[Expression]): Result = {
-      val firstRes = l.headOption match {
-        case Some(t) => t.matches(query, data)
-        case _ => throw OperatorException("BooleanAndOperator: operator argument is empty")
+    def booleanAnd(l: List[Expression]): Result = {
+      val valHead = l.headOption match {
+        case Some(arg) => arg.matches(query, data)
+        case _ => throw OperatorException("BooleanAndOperator: inner expression is empty")
       }
-      if (firstRes.score < 1.0d) {
-        Result(score=0.0d, data = firstRes.data)
-      } else if (l.tail.isEmpty) {
-        Result(score=1.0d, data = firstRes.data)
-      } else {
-        val res = loop(l.tail)
-        Result(score = res.score,
+      if (l.tail.isEmpty) {
+        Result(score = valHead.score,
           AnalyzersDataInternal(
             context = data.context,
-            traversedStates = data.traversedStates,
-            extractedVariables = res.data.extractedVariables ++ firstRes.data.extractedVariables,
-            data = res.data.data ++ firstRes.data.data
+            stateData = StateVariables(
+              traversedStates = data.stateData.traversedStates,
+              // map summation order is important, as valHead elements must override pre-existing elements
+              variables = data.stateData.variables ++
+                valHead.data.stateData.variables
+            ),
+            data = data.data ++ valHead.data.data
           )
         )
+      } else {
+        val valTail = booleanAnd(l.tail)
+        val finalScore = valHead.score * valTail.score
+        if (finalScore  =/= 1.0d) {
+          Result(score = finalScore, data = data)
+        } else {
+          Result(score = finalScore,
+            AnalyzersDataInternal(
+              context = data.context,
+              stateData = StateVariables(
+              traversedStates = data.stateData.traversedStates,
+              // map summation order is important, as valHead elements must override valTail existing elements
+              variables = valTail.data.stateData.variables ++
+                valHead.data.stateData.variables
+              ),
+              data = valTail.data.data ++ valHead.data.data
+            )
+          )
+        }
       }
     }
-    loop(children)
+    booleanAnd(children)
   }
 }

@@ -1,6 +1,7 @@
-package com.getjenny.analyzer.atoms
+package io.elegans.analyzer.atoms
 
-import com.getjenny.analyzer.expressions.{AnalyzersDataInternal, Result}
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
+
 import scala.util.control.NonFatal
 
 /**
@@ -33,7 +34,7 @@ class DoubleNumberVariableAtomic(val arguments: List[String], restrictedArgs: Ma
     * @return Result with 1.0 if the variable exists score = 0.0 otherwise
     */
   def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
-    val score = data.extractedVariables.get(varName) match {
+    val score = data.stateData.variables.get(varName) match {
       case Some(value) =>
         try {
           value.toDouble

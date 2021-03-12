@@ -1,8 +1,9 @@
-package com.getjenny.analyzer.operators
+package io.elegans.analyzer.operators
 
-import com.getjenny.analyzer.expressions._
-import com.getjenny.analyzer.analyzers._
-import scalaz.Scalaz._
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
+import io.elegans.analyzer.expressions._
+
+import scala.math.Ordering.Double.equiv
 
 /**
   * Created by mal on 21/02/2017.
@@ -11,44 +12,62 @@ import scalaz.Scalaz._
 class ConjunctionOperator(children: List[Expression]) extends AbstractOperator(children: List[Expression]) {
   override def toString: String = "ConjunctionOperator(" + children.mkString(", ") + ")"
   def add(e: Expression, level: Int = 0): AbstractOperator = {
-    if (level === 0) {
-      new ConjunctionOperator(e :: children)
-    } else if(children.isEmpty){
-      throw OperatorException("ConjunctionOperator: children list is empty")
-    } else {
-      children.headOption match {
-        case Some(t) =>
-          t match {
-            case c: AbstractOperator => new ConjunctionOperator(c.add(e, level - 1) :: children.tail)
-            case _ => throw OperatorException("ConjunctionOperator: trying to add to smt else than an operator")
+    level match {
+      case 0 => new ConjunctionOperator(e :: children)
+      case _ =>
+        if (children.isEmpty) {
+          throw OperatorException("ConjunctionOperator: children list is empty")
+        } else {
+          children.headOption match {
+            case Some(t) =>
+              t match {
+                case c: AbstractOperator => new ConjunctionOperator(c.add(e, level - 1) :: children.tail)
+                case _ => throw OperatorException("ConjunctionOperator: trying to add to smt else than an operator")
+              }
+            case _ => throw OperatorException("ConjunctionOperator: trying to add None instead of an operator")
           }
-        case _ => throw OperatorException("ConjunctionOperator: trying to add None instead of an operator")
-
-      }
+        }
     }
   }
 
   def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
     def conjunction(l: List[Expression]): Result = {
-      val eval = l.headOption match {
-        case Some(t) =>
-          t.evaluate(query, data)
-        case _ =>
-          throw OperatorException("ConjunctionOperator: argument list is empty")
+      val valHead = l.headOption match {
+        case Some(arg) => arg.evaluate(query, data)
+        case _ => throw OperatorException("ConjunctionOperator: inner expression is empty")
       }
-      if (eval.score === 0) Result(score = 0, data = eval.data)
-      else if (l.tail.isEmpty) eval
-      else {
-        val res = conjunction(l.tail)
-
-        Result(score = eval.score * res.score,
+      if (l.tail.isEmpty) {
+        Result(score = valHead.score,
           AnalyzersDataInternal(
             context = data.context,
-            traversedStates = data.traversedStates,
-            extractedVariables = eval.data.extractedVariables ++ res.data.extractedVariables,
-            data = eval.data.data ++ res.data.data
+            stateData = StateVariables(
+              traversedStates = data.stateData.traversedStates,
+              // map summation order is important, as valHead elements must override pre-existing elements
+              variables = data.stateData.variables ++
+                valHead.data.stateData.variables
+            ),
+            data = data.data ++ valHead.data.data
           )
         )
+      } else {
+        val valTail = conjunction(l.tail)
+        val finalScore = valHead.score * valTail.score
+        if (equiv(finalScore, 0.0d)) {
+          Result(score = finalScore, data = data)
+        } else {
+          Result(score = finalScore,
+            AnalyzersDataInternal(
+              context = data.context,
+              stateData = StateVariables(
+                traversedStates = data.stateData.traversedStates,
+                // map summation order is important, as valHead elements must override valTail existing elements
+                variables = valTail.data.stateData.variables ++
+                  valHead.data.stateData.variables
+              ),
+              data = valTail.data.data ++ valHead.data.data
+            )
+          )
+        }
       }
     }
     conjunction(children)

@@ -1,11 +1,11 @@
-package com.getjenny.analyzer.analyzers
+package io.elegans.analyzer.analyzers
 
 /**
   * Created by mal on 20/02/2017.
   */
 
-import com.getjenny.analyzer.operators._
-import com.getjenny.analyzer.atoms._
+import io.elegans.analyzer.operators._
+import io.elegans.analyzer.atoms._
 
 class DefaultAnalyzer(command: String, restrictedArgs: Map[String, String])
   extends {

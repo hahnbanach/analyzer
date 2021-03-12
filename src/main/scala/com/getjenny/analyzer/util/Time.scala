@@ -1,7 +1,7 @@
-package com.getjenny.analyzer.util
+package io.elegans.analyzer.util
 
 /**
-  * Created by Angelo Leto <angelo@getjenny.com> on 10/11/17
+  * Created by Angelo Leto <angelo.leto@elegans.io> on 10/11/17
   */
 
 import java.time._

@@ -1,7 +1,7 @@
-package com.getjenny.analyzer.atoms
+package io.elegans.analyzer.atoms
 
 /**
-  * Created by Angelo Leto <angelo@getjenny.com> on 03/03/17.
+  * Created by Angelo Leto <angelo.leto@elegans.io> on 03/03/17.
   */
 
 case class ExceptionAtomic(message: String = "", cause: Throwable = None.orNull)

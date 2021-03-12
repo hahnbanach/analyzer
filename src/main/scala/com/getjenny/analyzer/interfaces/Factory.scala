@@ -1,7 +1,7 @@
-package com.getjenny.analyzer.interfaces
+package io.elegans.analyzer.interfaces
 
 /**
-  * Created by Angelo Leto <angelo@getjenny.com> on 03/03/17.
+  * Created by Angelo Leto <angelo.leto@elegans.io> on 03/03/17.
   */
 
 trait OperatorFactoryTrait[T, V] {

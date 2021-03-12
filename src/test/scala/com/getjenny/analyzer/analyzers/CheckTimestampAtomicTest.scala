@@ -1,30 +1,43 @@
-package com.getjenny.analyzer.analyzers
+package io.elegans.analyzer.analyzers
 
 /**
-  * Created by Angelo Leto <angelo@getjenny.com> on 12/02/19.
+  * Created by Angelo Leto <angelo.leto@elegans.io> on 12/02/19.
   */
 
-import com.getjenny.analyzer.expressions.AnalyzersDataInternal
-import com.getjenny.analyzer.util.Time
-import org.scalatest._
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, StateVariables}
+import io.elegans.analyzer.util.Time
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class CheckTimestampAtomicTest extends FlatSpec with Matchers {
+class CheckTimestampAtomicTest extends AnyFlatSpec with Matchers {
 
   val restrictedArgs = Map.empty[String, String]
   "checkTimestampVariableAtom" should "return 1.0 testing if current timestamp > 1549990000" in {
-    val data = AnalyzersDataInternal(extractedVariables = Map[String, String]("TIMESTAMP" -> "1549990000"))
+    val data = AnalyzersDataInternal(
+      stateData = StateVariables(
+        variables = Map[String, String]("TIMESTAMP" -> "1549990000")
+      )
+    )
     val analyzer = new DefaultAnalyzer("""checkTimestampVariable("TIMESTAMP", "Greater")""", restrictedArgs)
     val analyzerValue = analyzer.evaluate("test query", data)
     analyzerValue.score should be (1.0)
   }
   it should "return 0.0 testing if current timestamp > 9999999999" in {
-    val data = AnalyzersDataInternal(extractedVariables = Map[String, String]("TIMESTAMP" -> "9999999999"))
+    val data = AnalyzersDataInternal(
+      stateData = StateVariables(
+        variables = Map[String, String]("TIMESTAMP" -> "9999999999")
+      )
+    )
     val analyzer = new DefaultAnalyzer("""checkTimestampVariable("TIMESTAMP", "Greater")""", restrictedArgs)
     val analyzerValue = analyzer.evaluate("test query", data)
     analyzerValue.score should be (0.0)
   }
   it should "return 1.0 testing if current timestamp < 9999999999" in {
-    val data = AnalyzersDataInternal(extractedVariables = Map[String, String]("TIMESTAMP" -> "9999999999"))
+    val data = AnalyzersDataInternal(
+      stateData = StateVariables(
+        variables = Map[String, String]("TIMESTAMP" -> "9999999999")
+      )
+    )
     val analyzer = new DefaultAnalyzer("""checkTimestampVariable("TIMESTAMP", "Less")""", restrictedArgs)
     val analyzerValue = analyzer.evaluate("test query", data)
     analyzerValue.score should be (1.0)

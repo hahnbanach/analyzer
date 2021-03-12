@@ -1,7 +1,7 @@
-package com.getjenny.analyzer.atoms
+package io.elegans.analyzer.atoms
 
-import com.getjenny.analyzer.expressions.{AnalyzersDataInternal, Result}
-import com.getjenny.analyzer.util._
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, StateVariables, Result}
+import io.elegans.analyzer.util._
 
 import scala.util.Try
 import scala.util.control.NonFatal
@@ -34,9 +34,12 @@ class MatchPatternRegexAtomic(val arguments: List[String], restrictedArgs: Map[S
     val res = Try(Result(score = 1.0,
       AnalyzersDataInternal(
         context = data.context,
-        traversedStates = data.traversedStates,
-        extractedVariables = regexExtractor.evaluate(query))
-      )) recover {
+        stateData = StateVariables(
+          traversedStates = data.stateData.traversedStates,
+          variables = regexExtractor.evaluate(query)
+        )
+      )
+    )) recover {
       case _: PatternExtractionNoMatchException =>
         //println("DEBUG: no match for regular expression specification(" + regex + "), query(" + query + ")")
         Result(score=0)

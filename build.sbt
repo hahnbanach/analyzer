@@ -2,10 +2,10 @@ import NativePackagerHelper._
 
 name := "analyzer"
 
-organization := "com.getjenny"
-maintainer := "angelo@getjenny.com"
+organization := "io.elegans"
+maintainer := "angelo.leto@elegans.io"
 
-crossScalaVersions := Seq("2.12.10")
+crossScalaVersions := Seq("2.13.5")
 
 resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/releases/",
   Resolver.bintrayRepo("hseeberger", "maven"))
@@ -13,10 +13,10 @@ resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/r
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies ++= {
-  val BreezeVersion	= "1.0"
-  val ScalatestVersion	= "3.1.1"
+  val BreezeVersion	= "1.1"
+  val ScalatestVersion	= "3.2.0"
   val ScalazVersion	= "7.2.30"
-  val ScoptVersion	= "3.7.0"
+  val ScoptVersion	= "3.7.1"
   val SprayJsonVersion = "1.3.5"
   Seq(
     "com.github.scopt" %% "scopt" % ScoptVersion,
@@ -52,7 +52,7 @@ publishArtifact in Test := false
 
 pomIncludeRepository := { _ => false }
 
-homepage := Some(url("http://www.getjenny.com"))
+homepage := Some(url("http://www.elegans.io"))
 
 scmInfo := Some(
   ScmInfo(
@@ -65,8 +65,8 @@ developers := List(
   Developer(
     id    = "angleto",
     name  = "Angelo Leto",
-    email = "angelo@getjenny.com",
-    url   = url("http://www.getjenny.com")
+    email = "angelo.leto@elegans.io",
+    url   = url("http://www.elegans.io")
   )
 )
 

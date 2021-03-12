@@ -1,11 +1,11 @@
-package com.getjenny.analyzer.atoms
+package io.elegans.analyzer.atoms
 
 /**
   * Created by angelo on 05/07/18.
   */
 
-import com.getjenny.analyzer.expressions.{AnalyzersDataInternal, Result}
-import com.getjenny.analyzer.util.{ComparisonOperators, Time}
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
+import io.elegans.analyzer.util.{ComparisonOperators, Time}
 
 /** Check if the current time is Equal, LessOrEqual, Less, Greater, GreaterOrEqual to the argument time in EPOC
   *

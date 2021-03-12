@@ -1,4 +1,4 @@
-package com.getjenny.analyzer.util
+package io.elegans.analyzer.util
 
 import scala.util.Random
 

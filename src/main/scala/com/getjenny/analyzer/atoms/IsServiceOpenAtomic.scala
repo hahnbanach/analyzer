@@ -1,10 +1,10 @@
-package com.getjenny.analyzer.atoms
+package io.elegans.analyzer.atoms
 
 /**
   * Created by angelo on 13/02/19.
   */
 
-import com.getjenny.analyzer.expressions.{AnalyzersDataInternal, Result}
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
 
 /** Check the variables, to determine whether or not the service is open
   *

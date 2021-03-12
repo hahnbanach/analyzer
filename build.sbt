@@ -1,16 +1,24 @@
-import NativePackagerHelper._
-
 name := "analyzer"
 
 organization := "io.elegans"
 maintainer := "angelo.leto@elegans.io"
 
-crossScalaVersions := Seq("2.13.5")
+lazy val scala212 = "2.12.12"
+lazy val scala213 = "2.13.5"
+
+ThisBuild / scalaVersion := scala212
+
+crossScalaVersions := Seq(scala212, scala213)
 
 resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/releases/",
   Resolver.bintrayRepo("hseeberger", "maven"))
 
-resolvers += Resolver.sonatypeRepo("snapshots")
+// publishing to gitlab through GitlabPlugin
+import com.gilcloud.sbt.gitlab.{GitlabCredentials,GitlabPlugin}
+GitlabPlugin.autoImport.gitlabGroupId     :=  Some(sys.env("CI_GROUP_ID").toInt)
+GitlabPlugin.autoImport.gitlabProjectId   :=  Some(sys.env("CI_PROJECT_ID").toInt)
+GitlabPlugin.autoImport.gitlabDomain      :=  sys.env("CI_SERVER_HOST")
+GitlabPlugin.autoImport.gitlabCredentials :=  Some(GitlabCredentials("Private-Token",sys.env("CI_JOB_TOKEN")))
 
 libraryDependencies ++= {
   val BreezeVersion	= "1.1"

@@ -14,11 +14,11 @@ resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/r
   Resolver.bintrayRepo("hseeberger", "maven"))
 
 // publishing to gitlab through GitlabPlugin
-import com.gilcloud.sbt.gitlab.{GitlabCredentials,GitlabPlugin}
-GitlabPlugin.autoImport.gitlabGroupId     :=  Some(sys.env("CI_GROUP_ID").toInt)
-GitlabPlugin.autoImport.gitlabProjectId   :=  Some(sys.env("CI_PROJECT_ID").toInt)
-GitlabPlugin.autoImport.gitlabDomain      :=  sys.env("CI_SERVER_HOST")
-GitlabPlugin.autoImport.gitlabCredentials :=  Some(GitlabCredentials("Private-Token",sys.env("CI_JOB_TOKEN")))
+//import com.gilcloud.sbt.gitlab.{GitlabCredentials,GitlabPlugin}
+//GitlabPlugin.autoImport.gitlabGroupId     :=  Some(sys.env("CI_GROUP_ID").toInt)
+//GitlabPlugin.autoImport.gitlabProjectId   :=  Some(sys.env("CI_PROJECT_ID").toInt)
+//GitlabPlugin.autoImport.gitlabDomain      :=  sys.env("CI_SERVER_HOST")
+//GitlabPlugin.autoImport.gitlabCredentials :=  Some(GitlabCredentials("Private-Token",sys.env("CI_JOB_TOKEN")))
 
 libraryDependencies ++= {
   val BreezeVersion	= "1.1"

@@ -17,4 +17,10 @@ class AtomsTest extends AnyFlatSpec with Matchers {
     k.matches("ciao stupid moron").score should be (1)
   }
 
+  "A timeBetween atomic" should "always give true if opening and closing time are 00:00 and 23:59" in {
+    val k = new TimeBetweenAtomic(List("00:00", "23:59", "CET"), restrictedArgs)
+    k.evaluate("").score should be (1.0)
+    k.matches("").score should be (1.0)
+  }
+
 }

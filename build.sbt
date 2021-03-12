@@ -56,8 +56,8 @@ homepage := Some(url("http://www.elegans.io"))
 
 scmInfo := Some(
   ScmInfo(
-    url("https://github.com/GetJenny/analyzer"),
-    "scm:git@github.com:GetJenny/analyzer.git"
+    url("https://gitlab.com/hahnbanach/analyzer"),
+    "scm:git@gitlab.com:hahnbanach/analyzer.git"
   )
 )
 

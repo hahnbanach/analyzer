@@ -44,16 +44,16 @@ class CheckTimestampAtomicTest extends AnyFlatSpec with Matchers {
   }
   it should "return 1.0 testing if current timestamp >= currentTimeStamp- 10" in {
     val data = AnalyzersDataInternal()
-    val currTimestampMinus10s: Long = Time.timestampEpoc - 10;
-    val query = """checkTimestamp("""" + currTimestampMinus10s.toString() + """","GreaterOrEqual")""";
+    val currTimestampMinus10s: Long = Time.timestampEpoc - 10
+    val query = """checkTimestamp("""" + currTimestampMinus10s.toString + """","GreaterOrEqual")"""
     val analyzer = new DefaultAnalyzer(query, restrictedArgs)
     val analyzerValue = analyzer.evaluate("test query", data)
     analyzerValue.score should be (1.0)
   }
   it should "return 0.0 testing if current timestamp >= currentTimeStamp + 10" in {
     val data = AnalyzersDataInternal()
-    val currTimestampPlus10s: Long = Time.timestampEpoc + 10;
-    val query = """checkTimestamp("""" + currTimestampPlus10s.toString() + """","GreaterOrEqual")""";
+    val currTimestampPlus10s: Long = Time.timestampEpoc + 10
+    val query = """checkTimestamp("""" + currTimestampPlus10s.toString + """","GreaterOrEqual")"""
     val analyzer = new DefaultAnalyzer(query, restrictedArgs)
     val analyzerValue = analyzer.evaluate("test query", data)
     analyzerValue.score should be (0.0)

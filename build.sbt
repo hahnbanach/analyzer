@@ -3,22 +3,22 @@ name := "analyzer"
 organization := "io.elegans"
 maintainer := "angelo.leto@elegans.io"
 
-lazy val scala212 = "2.12.12"
 lazy val scala213 = "2.13.5"
+lazy val scala212 = "2.12.12"
 
-ThisBuild / scalaVersion := scala212
+ThisBuild / scalaVersion := scala213
 
-crossScalaVersions := Seq(scala212, scala213)
+crossScalaVersions := Seq(scala213, scala212)
 
 resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/releases/",
   Resolver.bintrayRepo("hseeberger", "maven"))
 
 libraryDependencies ++= {
   val BreezeVersion	= "1.1"
-  val ScalatestVersion	= "3.2.0"
+  val ScalatestVersion	= "3.2.5"
   val ScalazVersion	= "7.2.30"
-  val ScoptVersion	= "3.7.1"
-  val SprayJsonVersion = "1.3.5"
+  val ScoptVersion	= "4.0.1"
+  val SprayJsonVersion = "1.3.6"
   Seq(
     "com.github.scopt" %% "scopt" % ScoptVersion,
     "org.scalanlp" %% "breeze" % BreezeVersion,

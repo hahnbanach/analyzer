@@ -3,8 +3,6 @@ package io.elegans.analyzer.operators
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
 import io.elegans.analyzer.expressions._
 
-import scala.math.Ordering.Double.equiv
-
 /**
   * Created by angelo on 18/01/2018.
   */
@@ -32,6 +30,8 @@ class ReinfConjunctionOperator(children: List[Expression]) extends AbstractOpera
     }
   }
 
+  val binThreshold: Double = 0.00000001d
+
   def evaluate(query: String, data: AnalyzersDataInternal = new AnalyzersDataInternal): Result = {
     def reinfConjunction(l: List[Expression]): Result = {
       val valHead = l.headOption match {
@@ -54,7 +54,7 @@ class ReinfConjunctionOperator(children: List[Expression]) extends AbstractOpera
       } else {
         val valTail = reinfConjunction(l.tail)
         val finalScore = (valHead.score * 1.1) * valTail.score
-        if (equiv(finalScore, 0)) {
+        if (finalScore < binThreshold) {
           Result(score = finalScore, data = data)
         } else {
           Result(score = finalScore,

@@ -4,8 +4,6 @@ import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result, StateVariabl
 import io.elegans.analyzer.expressions._
 import scalaz.Scalaz._
 
-import scala.math.Ordering.Double.equiv
-
 /**
   * Created by mal on 21/02/2017.
   */
@@ -26,6 +24,8 @@ class DisjunctionOperator(children: List[Expression]) extends AbstractOperator(c
       }
     }
   }
+
+  val binThreshold: Double = 0.00000001d
 
   def evaluate(query: String, data: AnalyzersDataInternal = new AnalyzersDataInternal): Result = {
     def compDisjunction(l: List[Expression]): Result = {
@@ -62,7 +62,7 @@ class DisjunctionOperator(children: List[Expression]) extends AbstractOperator(c
     }
     val resCompDisj = compDisjunction(children)
     val finalScore = 1.0d - resCompDisj.score
-    if (equiv(finalScore, 0.0d)) {
+    if (finalScore < binThreshold) {
       Result(
         score = finalScore,
         data = data

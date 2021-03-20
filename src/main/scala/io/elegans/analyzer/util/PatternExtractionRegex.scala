@@ -4,12 +4,13 @@ package io.elegans.analyzer.util
   * Created by Angelo Leto <angelo.leto@elegans.io> on 23/06/17.
   */
 
-import java.util.regex.PatternSyntaxException
+import scalaz.Scalaz._
 
-import scala.util.{Try, Success, Failure}
+import java.util.regex.PatternSyntaxException
+import scala.collection.immutable.{Map, Seq}
 import scala.util.control.NonFatal
 import scala.util.matching._
-import scalaz.Scalaz._
+import scala.util.{Failure, Success, Try}
 
 /** A generic pattern extraction utility class, it extract named patterns matching a given regex
   *   e.g. the following will match tree numbers separated by semicolumn:
@@ -51,8 +52,8 @@ class PatternExtractionRegex(declaration: String) extends
       throw PatternExtractionDeclarationParsingException(message, e)
   }
 
-  val groups: Array[String] = regexComponents match {
-    case Success(g) => g.getOrElse("groups", "").split(",")
+  val groups: Seq[String] = regexComponents match {
+    case Success(g) => g.getOrElse("groups", "").split(",").toIndexedSeq
     case Failure(e) =>
       val message = "Bad group results: " + e.getMessage
       throw PatternExtractionDeclarationParsingException(message)
@@ -65,7 +66,8 @@ class PatternExtractionRegex(declaration: String) extends
       throw PatternExtractionDeclarationParsingException(message)
   }
 
-  val regularExpression: Try[Regex] = Try(new Regex(expressionDeclaration, groups: _*)) recover {
+  val regularExpression: Try[Regex] = Try(
+    new Regex(regex = expressionDeclaration, groupNames = groups.toIndexedSeq: _*)) recover {
     case e: PatternSyntaxException =>
       throw PatternExtractionParsingException("Regex parsing exception: Description(" + e.getDescription
         + ") Index(" + e.getIndex + ") Message(" + e.getMessage + ") Pattern(" + e.getPattern + ")", e)

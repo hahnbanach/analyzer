@@ -36,7 +36,7 @@ class SetServiceOpeningAtomic(val arguments: List[String],
     val variables = data.stateData.variables.map{ case(k, v) =>
       val name = matchName(k)
       (name, v)
-    }.filterKeys(_ =/= "").map{ case(k, v) =>
+    }.view.filterKeys(_ =/= "").map{ case(k, v) =>
       (k, JsonToEntities.openingTime(v))
     }.map{ case(k, v) =>
       val hourMin = v.openTime.take(2).toInt
@@ -56,9 +56,10 @@ class SetServiceOpeningAtomic(val arguments: List[String],
         (v.days.isEmpty || v.days.contains(day)) &&
         (v.weekDays.isEmpty || v.weekDays.contains(weekday))
       (k, isOpen)
-    }.filter{case(_, v) => v}
+    }.filter{case(_, v) => v}.toMap
 
-    val serviceOpenVariable: Map[String, Map[String, Boolean]] = Map("__GJ_INTERNAL_SERVICEOPEN__" -> variables)
+    val serviceOpenVariable: Map[String, Map[String, Boolean]] =
+      Map("__GJ_INTERNAL_SERVICEOPEN__" -> variables)
     val newData = AnalyzersDataInternal(
       context = data.context,
       stateData = StateVariables(

@@ -1,9 +1,9 @@
 package io.elegans.analyzer.operators
 
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
 import io.elegans.analyzer.expressions._
+import scalaz.Scalaz._
 import scalaz._
-import Scalaz._
-import io.elegans.analyzer.entities.{AnalyzersDataInternal, StateVariables, Result}
 
 /** Compare Operator
   *

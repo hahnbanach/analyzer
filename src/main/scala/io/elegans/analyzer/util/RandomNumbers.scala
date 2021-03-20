@@ -6,27 +6,27 @@ object RandomNumbers {
   val random: Random.type = scala.util.Random
 
   def intPos: Int = {
-    math.abs(random.nextInt)
+    math.abs(random.nextInt())
   }
 
   def floatPos: Float = {
-    math.abs(random.nextFloat)
+    math.abs(random.nextFloat())
   }
 
   def doublePos: Double = {
-    math.abs(random.nextDouble)
+    math.abs(random.nextDouble())
   }
 
   def integer: Int = {
-    random.nextInt
+    random.nextInt()
   }
 
   def float: Float = {
-    random.nextFloat
+    random.nextFloat()
   }
 
   def double: Double = {
-    random.nextDouble
+    random.nextDouble()
   }
 
   def long: Long = {

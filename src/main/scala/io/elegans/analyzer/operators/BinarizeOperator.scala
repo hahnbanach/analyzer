@@ -4,8 +4,6 @@ import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result, StateVariabl
 import io.elegans.analyzer.expressions._
 import scalaz.Scalaz._
 
-import scala.math.Ordering.Double.equiv
-
 /** Binarize Operator
   *
   * It can only take one argument and return 1.0 if the expression is > 0 returns 0.0 otherwise
@@ -36,12 +34,14 @@ class BinarizeOperator(child: List[Expression]) extends AbstractOperator(child: 
     }
   }
 
+  val binThreshold: Double = 0.00000001d
+
   def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
     val res = child.headOption match {
       case Some(arg) => arg.matches(query, data)
       case _ => throw OperatorException("BinarizeOperator: inner expression is empty")
     }
-    if (equiv(res.score, 0.0d))
+    if (res.score < binThreshold)
       Result(
         score = 0.0d,
         data = data

@@ -39,13 +39,10 @@ class DeleteVariablesAtomic(val arguments: List[String], restrictedArgs: Map[Str
    */
   def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
     val variablesCountBefore = data.stateData.variables.length
-    val cleanedVariables: Map[String, String] = data.stateData.variables
-      .filterKeys(key => regex.findFirstIn(key).isEmpty)
+    val cleanedVariables: Map[String, String] = data.stateData.variables.view
+      .filterKeys(key => regex.findFirstIn(key).isEmpty).toMap
     val variablesCountAfter = cleanedVariables.length
-    val score = if(variablesCountBefore =/= variablesCountAfter)
-      1.0d
-    else
-      0.0d
+    val score = if(variablesCountBefore =/= variablesCountAfter) 1.0d else 0.0d
     Result(score = score,
       data = data.copy(
         stateData = data.stateData.copy(variables = cleanedVariables)

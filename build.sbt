@@ -4,11 +4,10 @@ organization := "io.elegans"
 maintainer := "angelo.leto@elegans.io"
 
 lazy val scala213 = "2.13.5"
-lazy val scala212 = "2.12.12"
 
 ThisBuild / scalaVersion := scala213
 
-crossScalaVersions := Seq(scala213, scala212)
+crossScalaVersions := Seq(scala213)
 
 resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/releases/",
   Resolver.bintrayRepo("hseeberger", "maven"))

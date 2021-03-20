@@ -1,11 +1,10 @@
-image: 'registry.gitlab.com/hahnbanach/docker-images/alpine-docker-sbt:1.0.0'
+image: 'registry.gitlab.com/hahnbanach/docker-images/alpine-docker-sbt:1.2.0'
 
 build:
   stage: build
   script:
     - sbt test
-    - sbt publish
+    - sbt +publish
   only:
     refs:
-      - master
       - tags

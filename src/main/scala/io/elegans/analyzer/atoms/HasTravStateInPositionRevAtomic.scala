@@ -1,7 +1,7 @@
 package io.elegans.analyzer.atoms
 
+import cats.implicits._
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
-import scalaz.Scalaz._
 
 class HasTravStateInPositionRevAtomic(arguments: List[String], restrictedArgs: Map[String, String]) extends AbstractAtomic{
   val state: String = arguments.headOption match {

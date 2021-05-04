@@ -38,6 +38,7 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], AbstractAtom
     "modulusVariable",
     "prevTravStateIs",
     "regex",
+    "regexVariableValue",
     "resetVariable",
     "setServiceOpening",
     "setVariable",
@@ -75,6 +76,7 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], AbstractAtom
     case "modulusVariable" => new ModulusVariableAtomic(argument, restrictedArgs)
     case "prevTravStateIs" => new PrevTravStateIsAtomic(argument, restrictedArgs)
     case "regex" => new RegularExpressionAtomic(argument, restrictedArgs)
+    case "regexVariableValue" => new RegexVariableValue(argument, restrictedArgs)
     case "resetVariable" => new ResetVariableAtomic(argument, restrictedArgs)
     case "setServiceOpening" => new SetServiceOpeningAtomic(argument, restrictedArgs)
     case "setVariable" => new SetVariableAtomic(argument, restrictedArgs)

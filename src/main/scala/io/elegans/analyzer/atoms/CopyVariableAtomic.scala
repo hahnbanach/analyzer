@@ -1,7 +1,7 @@
 package io.elegans.analyzer.atoms
 
+import cats.implicits._
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
-import scalaz.Scalaz._
 
 /**
  * Created by angelo.leto@elegans.io on 25/11/20.

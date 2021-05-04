@@ -1,7 +1,7 @@
 package io.elegans.analyzer.atoms
 
+import cats.implicits._
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
-import scalaz.Scalaz._
 
 import scala.util.matching.Regex
 

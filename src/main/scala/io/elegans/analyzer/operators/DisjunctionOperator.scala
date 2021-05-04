@@ -1,8 +1,8 @@
 package io.elegans.analyzer.operators
 
+import cats.implicits._
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
 import io.elegans.analyzer.expressions._
-import scalaz.Scalaz._
 
 /**
   * Created by mal on 21/02/2017.

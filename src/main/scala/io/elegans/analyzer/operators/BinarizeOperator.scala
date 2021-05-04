@@ -1,8 +1,8 @@
 package io.elegans.analyzer.operators
 
+import cats.implicits._
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
 import io.elegans.analyzer.expressions._
-import scalaz.Scalaz._
 
 /** Binarize Operator
   *
@@ -21,7 +21,7 @@ class BinarizeOperator(child: List[Expression]) extends AbstractOperator(child: 
       new BinarizeOperator(e :: child)
     } else child.headOption match {
       case Some(c: AbstractOperator) =>
-        child.tailOption match {
+        child.headOption.map(_ => child.tail) match {
           case Some(tail) =>
             if (tail.nonEmpty)
               throw OperatorException("BinarizeOperator: more than one child expression.")

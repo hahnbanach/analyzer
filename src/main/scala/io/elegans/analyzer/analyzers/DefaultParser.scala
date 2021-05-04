@@ -4,15 +4,15 @@ package io.elegans.analyzer.analyzers
   * Created by mal on 20/02/2017.
   */
 
+import cats.implicits._
 import io.elegans.analyzer.atoms._
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
 import io.elegans.analyzer.expressions.Expression
 import io.elegans.analyzer.interfaces.{AtomicFactoryTrait, OperatorFactoryTrait}
 import io.elegans.analyzer.operators._
 
-import scala.util.control.NonFatal
 import scala.util.Try
-import scalaz.Scalaz._
+import scala.util.control.NonFatal
 
 /**
   * All sentences with more than 22 characters and with keywords "password" and either "lost" or "forgot"
@@ -58,7 +58,7 @@ abstract class DefaultParser(command: String, restrictedArgs: Map[String, String
 
     /** \( does not count, \\( does
       */
-    def escapeChar(chars: List[Char], i: Int): Boolean = chars(i-1) === '\\' && chars(i-2) =/= '\\'
+    def escapeChar(chars: List[Char], i: Int): Boolean = chars(i-1) === '\\' && chars(i-2) =!= '\\'
 
     @scala.annotation.tailrec
     def loop(chars: List[Char], index: Int, parenthesisBalance: List[Int], quoteBalance: Int,
@@ -67,7 +67,7 @@ abstract class DefaultParser(command: String, restrictedArgs: Map[String, String
       if (index >= chars.length && chars.nonEmpty) {
         if (quoteBalance < 0)
           throw AnalyzerParsingException("Parsing error: quotes are not balanced")
-        else if (parenthesisBalance.sum =/= 0)
+        else if (parenthesisBalance.sum =!= 0)
           throw AnalyzerParsingException("Parsing error: parenthesis are not balanced")
         else
           commandTree

@@ -4,9 +4,9 @@ package io.elegans.analyzer.atoms
   * Created by angelo on 13/02/19.
   */
 
+import cats.implicits._
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
 import io.elegans.analyzer.util.{JsonToEntities, Time}
-import scalaz.Scalaz._
 
 import scala.util.matching.Regex
 
@@ -36,7 +36,7 @@ class SetServiceOpeningAtomic(val arguments: List[String],
     val variables = data.stateData.variables.map{ case(k, v) =>
       val name = matchName(k)
       (name, v)
-    }.view.filterKeys(_ =/= "").map{ case(k, v) =>
+    }.view.filterKeys(_ =!= "").map{ case(k, v) =>
       (k, JsonToEntities.openingTime(v))
     }.map{ case(k, v) =>
       val hourMin = v.openTime.take(2).toInt

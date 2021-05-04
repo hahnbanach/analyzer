@@ -1,8 +1,8 @@
 package io.elegans.analyzer.operators
 
+import cats.implicits._
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
 import io.elegans.analyzer.expressions._
-import scalaz.Scalaz._
 
 /** Not Operator
   *
@@ -23,7 +23,7 @@ class BooleanNotOperator(child: List[Expression]) extends AbstractOperator(child
       new BooleanNotOperator(e :: child)
     } else child.headOption match {
       case Some(c: AbstractOperator) =>
-        child.tailOption match {
+        child.headOption.map(_ => child.tail) match {
           case Some(tail) =>
             if (tail.nonEmpty)
               throw OperatorException("BooleanNotOperator: more than one child expression.")

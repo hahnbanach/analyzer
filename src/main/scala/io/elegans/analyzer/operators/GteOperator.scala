@@ -1,8 +1,8 @@
 package io.elegans.analyzer.operators
 
+import cats.implicits._
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
 import io.elegans.analyzer.expressions._
-import scalaz.Scalaz._
 
 /** Compare Operator
   *

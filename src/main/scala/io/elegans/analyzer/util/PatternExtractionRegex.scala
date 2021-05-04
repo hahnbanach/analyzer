@@ -4,7 +4,7 @@ package io.elegans.analyzer.util
   * Created by Angelo Leto <angelo.leto@elegans.io> on 23/06/17.
   */
 
-import scalaz.Scalaz._
+import cats.implicits._
 
 import java.util.regex.PatternSyntaxException
 import scala.collection.immutable.{Map, Seq}

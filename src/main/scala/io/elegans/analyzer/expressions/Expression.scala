@@ -1,8 +1,9 @@
 package io.elegans.analyzer.expressions
 
 
+import cats.implicits._
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
-import scalaz.Scalaz._
+
 /**
   * This the basic structure of StarChat Domain Specific Language.
   *

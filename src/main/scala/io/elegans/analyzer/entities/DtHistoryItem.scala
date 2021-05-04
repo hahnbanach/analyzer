@@ -4,7 +4,7 @@ package io.elegans.analyzer.entities
   * Created by Angelo Leto <angelo.leto@elegans.io> on 15/11/19.
   */
 
-import scalaz.Scalaz._
+import cats.implicits._
 
 object DtHistoryType extends Enumeration {
   val INTERNAL,

@@ -13,18 +13,19 @@ resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/r
   Resolver.bintrayRepo("hseeberger", "maven"))
 
 libraryDependencies ++= {
-  val BreezeVersion	= "1.1"
-  val ScalatestVersion	= "3.2.5"
-  val ScalazVersion	= "7.2.30"
-  val ScoptVersion	= "4.0.1"
-  val SprayJsonVersion = "1.3.6"
+  val breezeVersion	= "1.1"
+  val catsVersion = "2.5.0"
+  val scalatestVersion	= "3.2.5"
+  val scoptVersion	= "4.0.1"
+  val sprayJsonVersion = "1.3.6"
   Seq(
-    "com.github.scopt" %% "scopt" % ScoptVersion,
-    "org.scalanlp" %% "breeze" % BreezeVersion,
-    "org.scalanlp" %% "breeze-natives" % BreezeVersion,
-    "org.scalatest" %% "scalatest" % ScalatestVersion % Test,
-    "org.scalaz" %% "scalaz-core" % ScalazVersion,
-    "io.spray" %%  "spray-json" % SprayJsonVersion
+    "com.github.scopt" %% "scopt" % scoptVersion,
+    "io.spray" %%  "spray-json" % sprayJsonVersion,
+    "org.scalanlp" %% "breeze" % breezeVersion,
+    "org.scalanlp" %% "breeze-natives" % breezeVersion,
+    "org.scalatest" %% "scalatest" % scalatestVersion % Test,
+    "org.typelevel" %% "cats-core" % catsVersion,
+    "org.typelevel" %% "cats-kernel" % catsVersion
   )
 }
 

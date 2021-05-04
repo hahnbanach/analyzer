@@ -1,8 +1,8 @@
 package io.elegans.analyzer.operators
 
+import cats.implicits._
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
 import io.elegans.analyzer.expressions._
-import scalaz.Scalaz._
 
 /**
   * Created by mal on 21/02/2017.
@@ -47,7 +47,7 @@ class BooleanAndOperator(children: List[Expression]) extends AbstractOperator(ch
       } else {
         val valTail = booleanAnd(l.tail)
         val finalScore = valHead.score * valTail.score
-        if (finalScore  =/= 1.0d) {
+        if (finalScore  =!= 1.0d) {
           Result(score = finalScore, data = data)
         } else {
           Result(score = finalScore,

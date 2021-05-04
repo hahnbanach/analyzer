@@ -1,9 +1,8 @@
 package io.elegans.analyzer.atoms
 
-import io.elegans.analyzer.util._
-import scalaz._
-import Scalaz._
+import cats.implicits._
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
+import io.elegans.analyzer.util._
 
 /**
   * Created by angelo on 18/09/2017.
@@ -16,7 +15,7 @@ class CosineDistanceAnalyzer(val arguments: List[String], restrictedArgs: Map[St
   val isEvaluateNormalized: Boolean = true
   def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
     // 1- tokenize
-    val queryTokens = query.split("\\W").filter(_ =/= "")
+    val queryTokens = query.split("\\W").filter(_ =!= "")
 
     // 2- for each argument try to match with the tokens and extract dimensions
     val matchList = arguments.flatMap(keyword => {

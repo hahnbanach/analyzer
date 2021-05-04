@@ -1,7 +1,7 @@
 package io.elegans.analyzer.atoms
 
+import cats.implicits._
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
-import scalaz.Scalaz._
 
 import scala.util.matching.Regex
 
@@ -38,11 +38,11 @@ class DeleteVariablesAtomic(val arguments: List[String], restrictedArgs: Map[Str
    * @return Result with 1.0 if at least one variable was found and deleted, 0.0 otherwise
    */
   def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
-    val variablesCountBefore = data.stateData.variables.length
+    val variablesCountBefore = data.stateData.variables.size
     val cleanedVariables: Map[String, String] = data.stateData.variables.view
       .filterKeys(key => regex.findFirstIn(key).isEmpty).toMap
-    val variablesCountAfter = cleanedVariables.length
-    val score = if(variablesCountBefore =/= variablesCountAfter) 1.0d else 0.0d
+    val variablesCountAfter = cleanedVariables.size
+    val score = if(variablesCountBefore =!= variablesCountAfter) 1.0d else 0.0d
     Result(score = score,
       data = data.copy(
         stateData = data.stateData.copy(variables = cleanedVariables)

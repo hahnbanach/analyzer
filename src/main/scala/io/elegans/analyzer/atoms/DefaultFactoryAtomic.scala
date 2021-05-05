@@ -44,7 +44,8 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], AbstractAtom
     "setVariable",
     "timeBetween",
     "toDouble",
-    "vOneKeyword"
+    "vOneKeyword",
+    "variableSize"
   )
 
   override def get(name: String, argument: List[String], restrictedArgs: Map[String, String]):
@@ -76,13 +77,14 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], AbstractAtom
     case "modulusVariable" => new ModulusVariableAtomic(argument, restrictedArgs)
     case "prevTravStateIs" => new PrevTravStateIsAtomic(argument, restrictedArgs)
     case "regex" => new RegularExpressionAtomic(argument, restrictedArgs)
-    case "regexVariableValue" => new RegexVariableValue(argument, restrictedArgs)
+    case "regexVariableValue" => new RegexVariableValueAtomic(argument, restrictedArgs)
     case "resetVariable" => new ResetVariableAtomic(argument, restrictedArgs)
     case "setServiceOpening" => new SetServiceOpeningAtomic(argument, restrictedArgs)
     case "setVariable" => new SetVariableAtomic(argument, restrictedArgs)
     case "timeBetween" => new TimeBetweenAtomic(argument, restrictedArgs)
     case "toDouble" => new ToDoubleNumberAtomic(argument, restrictedArgs)
     case "vOneKeyword" => new KeywordAtomic(argument, restrictedArgs)
+    case "variableSize" => new VariableSizeAtomic(argument, restrictedArgs)
     case _ => throw ExceptionAtomic("Atom \'" + name + "\' not found")
   }
 }

@@ -8,7 +8,7 @@ import io.elegans.analyzer.entities.{AnalyzersDataInternal, DtHistoryItem, DtHis
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class RegexVariableAtomicTest extends AnyFlatSpec with Matchers {
+class RegexAndSizeVariableAtomicTest extends AnyFlatSpec with Matchers {
 
   val data: AnalyzersDataInternal = AnalyzersDataInternal(
     stateData = StateVariables(
@@ -40,6 +40,16 @@ class RegexVariableAtomicTest extends AnyFlatSpec with Matchers {
   }
   it should "return 0.0d if the variable doesn't exists" in {
     val analyzer = new DefaultAnalyzer("""regexVariableValue("variable100", "123$")""", restrictedArgs)
+    val analyzerValue = analyzer.evaluate("", data)
+    analyzerValue.score shouldBe 0.0d
+  }
+  "variableSize Atom" should "return the correct size of the variable" in {
+    val analyzer = new DefaultAnalyzer("""variableSize("variable1")""", restrictedArgs)
+    val analyzerValue = analyzer.evaluate("", data)
+    analyzerValue.score shouldBe data.stateData.variables.getOrElse("variable1", "").size
+  }
+  it should "return 0.0d if the variable doesn't exists" in {
+    val analyzer = new DefaultAnalyzer("""variableSize("variable1492")""", restrictedArgs)
     val analyzerValue = analyzer.evaluate("", data)
     analyzerValue.score shouldBe 0.0d
   }

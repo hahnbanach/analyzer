@@ -14,7 +14,7 @@ import scala.util.matching.Regex
   *
   * @param arguments: <variable>, <regex>
   */
-class RegexVariableValue(val arguments: List[String], restrictedArgs: Map[String, String]) extends AbstractAtomic {
+class RegexVariableValueAtomic(val arguments: List[String], restrictedArgs: Map[String, String]) extends AbstractAtomic {
   val varName: String = arguments.headOption match {
     case Some(t) => t
     case _ => throw ExceptionAtomic("RegexVariableValue: must have a variable name")

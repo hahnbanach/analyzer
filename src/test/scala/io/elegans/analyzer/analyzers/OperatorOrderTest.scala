@@ -33,16 +33,12 @@ class OperatorOrderTest extends AnyFlatSpec with Matchers {
   def analyzerString(operator: String, operands: List[String]): String = operator + "(" + operands.mkString(",") + ")"
   val scoreSuccess: Double = 1.0d
   val scoreFailure: Double = 0.0d
-  val scoreSuccessReinf1: Double = 1.1d
-  val scoreSuccessReinf2: Double = scoreSuccessReinf1 * scoreSuccessReinf1
-  val scoreSuccessReinf3: Double = scoreSuccessReinf2 * scoreSuccessReinf1
 
   val operatorBooleanAnd: String = "booleanAnd"
   val operatorBooleanOr: String = "booleanOr"
   val operatorBooleanNot: String = "booleanNot"
   val operatorConjunction: String = "conjunction"
   val operatorDisjunction: String = "disjunction"
-  val operatorReinfConjunction: String = "reinfConjunction"
   val operatorMax: String = "max"
   val operatorBinarize: String = "binarize"
 
@@ -324,77 +320,19 @@ class OperatorOrderTest extends AnyFlatSpec with Matchers {
     analyzerValue.data.data shouldBe Map()
   }
 
-  operatorReinfConjunction should
-    "trigger and extract email address when matching regex pattern" in {
-    val analyzer = new DefaultAnalyzer(
-      analyzerString(operatorReinfConjunction, List(atomExtractEmail)),
-      restrictedArgs
-    )
-    val analyzerValue = analyzer.evaluate(queryWithEmail, data)
-    analyzerValue.score shouldBe scoreSuccessReinf1
-    analyzerValue.data.stateData.variables(extractedVarKey) shouldBe extractedVarValue
-    analyzerValue.data.stateData.variables(extractedEmailKey) shouldBe emailInQuery
-    analyzerValue.data.stateData.traversedStates.last.state shouldBe travStateId
-    analyzerValue.data.data shouldBe Map()
-  }
-  it should "trigger and extract email address when matching regex pattern and lastTravStateIs is true" in {
-    val analyzer = new DefaultAnalyzer(
-      analyzerString(operatorReinfConjunction,List(atomExtractEmail, atomLastTravStateTrue)),
-      restrictedArgs
-    )
-    val analyzerValue = analyzer.evaluate(queryWithEmail, data)
-    analyzerValue.score shouldBe scoreSuccessReinf2
-    analyzerValue.data.stateData.variables(extractedVarKey) shouldBe extractedVarValue
-    analyzerValue.data.stateData.variables(extractedEmailKey) shouldBe emailInQuery
-    analyzerValue.data.stateData.traversedStates.last.state shouldBe travStateId
-    analyzerValue.data.data shouldBe Map()
-  }
-  it should "trigger and extract email address when lastTravStateIs is true and matching regex pattern" in {
-    val analyzer = new DefaultAnalyzer(
-      analyzerString(operatorReinfConjunction,List(atomLastTravStateTrue, atomExtractEmail)),
-      restrictedArgs
-    )
-    val analyzerValue = analyzer.evaluate(queryWithEmail, data)
-    analyzerValue.score shouldBe scoreSuccessReinf2
-    analyzerValue.data.stateData.variables(extractedVarKey) shouldBe extractedVarValue
-    analyzerValue.data.stateData.variables(extractedEmailKey) shouldBe emailInQuery
-    analyzerValue.data.stateData.traversedStates.last.state shouldBe travStateId
-    analyzerValue.data.data shouldBe Map()
-  }
-  it should "not trigger and not update email address when matching regex pattern and lastTravStateIs is false" in {
-    val analyzer = new DefaultAnalyzer(
-      analyzerString(operatorReinfConjunction,List(atomExtractEmail, atomLastTravStateFalse)),
-      restrictedArgs
-    )
-    val analyzerValue = analyzer.evaluate(queryWithEmail, data)
-    analyzerValue.score shouldBe scoreFailure
-    analyzerValue.data.stateData.variables(extractedVarKey) shouldBe extractedVarValue
-    analyzerValue.data.stateData.variables(extractedEmailKey) shouldBe emailExtracted
-    analyzerValue.data.stateData.traversedStates.last.state shouldBe travStateId
-    analyzerValue.data.data shouldBe Map()
-  }
+
+
+
+
   it should "not trigger and not update email address when lastTravStateIs is false and matching regex pattern" in {
     val analyzer = new DefaultAnalyzer(
-      analyzerString(operatorReinfConjunction,List(atomLastTravStateFalse, atomExtractEmail)),
+      analyzerString(operatorBooleanAnd,List(atomLastTravStateFalse, atomExtractEmail)),
       restrictedArgs
     )
     val analyzerValue = analyzer.evaluate(queryWithEmail, data)
     analyzerValue.score shouldBe scoreFailure
     analyzerValue.data.stateData.variables(extractedVarKey) shouldBe extractedVarValue
     analyzerValue.data.stateData.variables(extractedEmailKey) shouldBe emailExtracted
-    analyzerValue.data.stateData.traversedStates.last.state shouldBe travStateId
-    analyzerValue.data.data shouldBe Map()
-  }
-  it should "trigger and extract both email address and customer message" in {
-    val analyzer = new DefaultAnalyzer(
-      analyzerString(operatorReinfConjunction,List(atomLastTravStateTrue, atomExtractEmail, atomExtractQuery)),
-      restrictedArgs
-    )
-    val analyzerValue = analyzer.evaluate(queryWithEmail, data)
-    analyzerValue.score shouldBe scoreSuccessReinf3
-    analyzerValue.data.stateData.variables(extractedVarKey) shouldBe extractedVarValue
-    analyzerValue.data.stateData.variables(extractedEmailKey) shouldBe emailInQuery
-    analyzerValue.data.stateData.variables(extractedQueryKey) shouldBe queryWithEmail
     analyzerValue.data.stateData.traversedStates.last.state shouldBe travStateId
     analyzerValue.data.data shouldBe Map()
   }
@@ -497,25 +435,6 @@ class OperatorOrderTest extends AnyFlatSpec with Matchers {
     analyzerValue.data.stateData.traversedStates.last.state shouldBe travStateId
     analyzerValue.data.data shouldBe Map()
   }
-  it should "trigger and add to result only the variable from operand with higher score" in {
-    val analyzer = new DefaultAnalyzer(
-      analyzerString(
-        operatorMax,
-        List(
-          atomExtractQuery,
-          analyzerString(operatorReinfConjunction, List(atomExtractEmail))
-        )
-      ),
-      restrictedArgs
-    )
-    val analyzerValue = analyzer.evaluate(queryWithEmail, data)
-    analyzerValue.score shouldBe scoreSuccessReinf1
-    analyzerValue.data.stateData.variables(extractedVarKey) shouldBe extractedVarValue
-    analyzerValue.data.stateData.variables(extractedEmailKey) shouldBe emailInQuery
-    analyzerValue.data.stateData.variables.contains(extractedQueryKey) shouldBe false
-    analyzerValue.data.stateData.traversedStates.last.state shouldBe travStateId
-    analyzerValue.data.data shouldBe Map()
-  }
 
   operatorBinarize should
     "trigger and return variables passed as data" in {
@@ -570,7 +489,7 @@ class OperatorOrderTest extends AnyFlatSpec with Matchers {
     val analyzer = new DefaultAnalyzer(
       analyzerString(
         operatorBinarize,
-        List(analyzerString(operatorReinfConjunction, List(atomExtractEmail)))
+        List(analyzerString(operatorBooleanAnd, List(atomExtractEmail)))
       ),
       restrictedArgs
     )

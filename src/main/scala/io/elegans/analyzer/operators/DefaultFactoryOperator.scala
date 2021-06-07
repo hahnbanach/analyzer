@@ -7,48 +7,30 @@ package io.elegans.analyzer.operators
 import io.elegans.analyzer.expressions.Expression
 import io.elegans.analyzer.interfaces._
 
-class DefaultFactoryOperator extends OperatorFactoryTrait[List[Expression], AbstractOperator] {
-
-  override val operations: Set[String] = Set(
-    "or",
-    "and",
-    "conjunction",
-    "disjunction",
-    "bor",
-    "band",
-    "booleanor",
-    "booleanand",
-    "booleanOr",
-    "booleanAnd",
-    "booleanNot",
-    "booleannot",
-    "bnot",
-    "maximum",
-    "max",
-    "reinfConjunction",
-    "binarize",
-    "eq",
-    "lt",
-    "gt",
-    "lte",
-    "gte"
+class DefaultFactoryOperator extends OperatorFactoryTrait[List[Expression]] {
+  val functionsMap: Map[String, List[Expression] => AbstractOperator] = Map(
+    ("booleanOr", (argument: List[Expression]) => new BooleanOrOperator(argument)),
+    ("booleanor", (argument: List[Expression]) => new BooleanOrOperator(argument)),
+    ("bor", (argument: List[Expression]) => new BooleanOrOperator(argument)),
+    ("booleanAnd", (argument: List[Expression]) => new BooleanAndOperator(argument)),
+    ("booleanand", (argument: List[Expression]) => new BooleanAndOperator(argument)),
+    ("band", (argument: List[Expression]) => new BooleanAndOperator(argument)),
+    ("booleanNot", (argument: List[Expression]) => new BooleanNotOperator(argument)),
+    ("booleannot", (argument: List[Expression]) => new BooleanNotOperator(argument)),
+    ("bnot", (argument: List[Expression]) => new BooleanNotOperator(argument)),
+    ("conjunction", (argument: List[Expression]) => new ConjunctionOperator(argument)),
+    ("and", (argument: List[Expression]) => new ConjunctionOperator(argument)),
+    ("disjunction", (argument: List[Expression]) => new DisjunctionOperator(argument)),
+    ("or", (argument: List[Expression]) => new DisjunctionOperator(argument)),
+    ("maximum", (argument: List[Expression]) => new MaxOperator(argument)),
+    ("max", (argument: List[Expression]) => new MaxOperator(argument)),
+    ("binarize", (argument: List[Expression]) => new BinarizeOperator(argument)),
+    ("eq", (argument: List[Expression]) => new EqOperator(argument)),
+    ("lt", (argument: List[Expression]) => new LtOperator(argument)),
+    ("gt", (argument: List[Expression]) => new GtOperator(argument)),
+    ("lte", (argument: List[Expression]) => new LteOperator(argument)),
+    ("gte", (argument: List[Expression]) => new GteOperator(argument))
   )
 
-  override def get(name: String, argument: List[Expression]): AbstractOperator = name.filter(c => !c.isWhitespace ) match {
-    case "booleanOr" | "booleanor" | "bor" => new BooleanOrOperator(argument)
-    case "booleanAnd"| "booleanand"| "band" => new BooleanAndOperator(argument)
-    case "booleanNot"| "booleannot"| "bnot" => new BooleanNotOperator(argument)
-    case "conjunction" | "and" => new ConjunctionOperator(argument)
-    case "disjunction" | "or" => new DisjunctionOperator(argument)
-    case "maximum" | "max" => new MaxOperator(argument)
-    case "binarize" => new BinarizeOperator(argument)
-    case "eq" => new EqOperator(argument)
-    case "lt" => new LtOperator(argument)
-    case "gt" => new GtOperator(argument)
-    case "lte" => new LteOperator(argument)
-    case "gte" => new GteOperator(argument)
-    case "reinfConjunction" => new ReinfConjunctionOperator(argument)
-    case _ => throw OperatorNotFoundException("Operator \'" + name + "\' not found")
-  }
-
+  val operations: Set[String] = functionsMap.keys.toSet
 }

@@ -27,8 +27,8 @@ import scala.util.control.NonFatal
   */
 abstract class DefaultParser(command: String, restrictedArgs: Map[String, String]) extends AbstractParser(command: String) {
 
-  val atomicFactory: AtomicFactoryTrait[List[String], AbstractAtomic, Map[String, String]]
-  val operatorFactory: OperatorFactoryTrait[List[Expression], AbstractOperator]
+  val atomicFactory: AtomicFactoryTrait[List[String], Map[String, String]]
+  val operatorFactory: OperatorFactoryTrait[List[Expression]]
 
   private[this] val operator = gobbleCommands(command)
 

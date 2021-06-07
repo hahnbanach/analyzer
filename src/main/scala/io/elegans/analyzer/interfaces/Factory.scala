@@ -1,6 +1,6 @@
 package io.elegans.analyzer.interfaces
-import _root_.io.elegans.analyzer.atoms.AbstractAtomic
-import _root_.io.elegans.analyzer.operators.AbstractOperator
+import io.elegans.analyzer.atoms.AbstractAtomic
+import io.elegans.analyzer.operators.AbstractOperator
 
 /**
   * Created by Angelo Leto <angelo.leto@elegans.io> on 07/06/21.

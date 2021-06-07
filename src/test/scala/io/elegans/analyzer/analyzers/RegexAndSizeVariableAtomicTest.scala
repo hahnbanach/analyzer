@@ -4,7 +4,7 @@ package io.elegans.analyzer.analyzers
   * Created by Angelo Leto <angelo.leto@elegans.io> on 04/05/21.
   */
 
-import io.elegans.analyzer.entities.{AnalyzersDataInternal, DtHistoryItem, DtHistoryType, StateVariables}
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, DtHistoryItem, StateVariables}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -46,7 +46,7 @@ class RegexAndSizeVariableAtomicTest extends AnyFlatSpec with Matchers {
   "variableSize Atom" should "return the correct size of the variable" in {
     val analyzer = new DefaultAnalyzer("""variableSize("variable1")""", restrictedArgs)
     val analyzerValue = analyzer.evaluate("", data)
-    analyzerValue.score shouldBe data.stateData.variables.getOrElse("variable1", "").size
+    analyzerValue.score shouldBe data.stateData.variables.getOrElse("variable1", "").length
   }
   it should "return 0.0d if the variable doesn't exists" in {
     val analyzer = new DefaultAnalyzer("""variableSize("variable1492")""", restrictedArgs)

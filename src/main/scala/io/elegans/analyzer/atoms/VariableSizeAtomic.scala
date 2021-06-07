@@ -2,8 +2,6 @@ package io.elegans.analyzer.atoms
 
 import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result}
 
-import scala.util.matching.Regex
-
 /**
   * Created by angelo on 05/05/21.
   */

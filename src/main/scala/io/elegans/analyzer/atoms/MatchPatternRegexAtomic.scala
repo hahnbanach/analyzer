@@ -1,6 +1,6 @@
 package io.elegans.analyzer.atoms
 
-import io.elegans.analyzer.entities.{AnalyzersDataInternal, StateVariables, Result}
+import io.elegans.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
 import io.elegans.analyzer.util._
 
 import scala.util.Try

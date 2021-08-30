@@ -3,7 +3,9 @@ name := "analyzer"
 organization := "io.elegans"
 maintainer := "angelo.leto@elegans.io"
 
-lazy val scala213 = "2.13.5"
+
+lazy val scala213 = "2.13.6"
+lazy val scala30 = "3.0.1"
 
 ThisBuild / scalaVersion := scala213
 
@@ -13,8 +15,8 @@ resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/r
   Resolver.bintrayRepo("hseeberger", "maven"))
 
 libraryDependencies ++= {
-  val breezeVersion	= "1.1"
-  val catsVersion = "2.5.0"
+  val breezeVersion	= "1.2"
+  val catsVersion = "2.6.1"
   val scalatestVersion	= "3.2.5"
   val scoptVersion	= "4.0.1"
   val sprayJsonVersion = "1.3.6"
@@ -32,7 +34,7 @@ libraryDependencies ++= {
 scalacOptions += "-deprecation"
 scalacOptions += "-feature"
 //scalacOptions += "-Ylog-classpath"
-testOptions in Test += Tests.Argument("-oF")
+Test / testOptions += Tests.Argument("-oF")
 
 enablePlugins(GitVersioning)
 enablePlugins(GitBranchPrompt)

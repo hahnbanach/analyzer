@@ -25,7 +25,6 @@ class IfThenElseOperatorTest extends AnyFlatSpec with Matchers {
     val analyzerValue = analyzer.evaluate("test query", data)
     analyzerValue.score should be (3.0)
   }
-
   it should "return 100.0 if VARIABLE is equal to hello" in {
     val data = AnalyzersDataInternal(
       stateData = StateVariables(

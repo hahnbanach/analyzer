@@ -4,68 +4,56 @@ import cats.implicits._
 import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
 import com.hahnbanach.analyzer.expressions._
 
-/** IfThenElse Operator
-  *
-  * ifThenElse(test, trueAtom, falseAtom)
-  *
-  * Created by Angelo Leto on 13/11/2021.
+/**
+  * Created by mal on 21/02/2017.
   */
 
-class IfThenElseOperator(child: List[Expression]) extends AbstractOperator(child: List[Expression]) {
-  require(child.length === 3, "ifThenElse accept three atoms")
-  override def toString: String = "ifThenElse(" + child.mkString(", ") + ")"
-
+class IfThenElseOperator(children: List[Expression]) extends AbstractOperator(children: List[Expression]) {
+  override def toString: String = "IfThenElseOperator(" + children.mkString(", ") + ")"
   def add(e: Expression, level: Int = 0): AbstractOperator = {
-    println("AAAAA")
-    if (level === 0) new BooleanAndOperator(e :: child)
+    if (level === 0) new IfThenElseOperator(e :: children)
     else {
-      child.headOption match {
+      children.headOption match {
         case Some(t) =>
           t match {
-            case c: AbstractOperator => new BooleanAndOperator(c.add(e, level - 1) :: child.tail)
-            case _ => throw OperatorException("ifThenElse: trying to add to smt else than an operator")
+            case c: AbstractOperator => new IfThenElseOperator(c.add(e, level - 1) :: children.tail)
+            case _ => throw OperatorException("IfThenElseOperator: trying to add to smt else than an operator")
           }
         case _ =>
-          throw OperatorException("ifThenElse: trying to add None instead of an operator")
+          throw OperatorException("IfThenElseOperator: trying to add None instead of an operator")
       }
     }
   }
 
-  def evaluate(query: String, data: AnalyzersDataInternal = new AnalyzersDataInternal): Result = {
-    val testArument = child.headOption match {
-      case Some(t) => t
-      case _ =>
-        throw OperatorException("IfThenElse: requires an expression as first argument")
+  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+    def ifThenElse(l: List[Expression]): Result = {
+      val testExpressionRes = l.get(2)
+        .getOrElse(throw OperatorException("Test was not provided"))
+        .evaluate(query, data = data)
+
+      val res = if(testExpressionRes.score >= 1.0) {
+        l.get(1)
+          .getOrElse(throw OperatorException("Then expression was not provided"))
+          .evaluate(query, data = data)
+      } else {
+        l.get(0)
+          .getOrElse(throw OperatorException("Else expression was not provided"))
+          .evaluate(query, data = data)
+      }
+
+      Result(score = res.score,
+        AnalyzersDataInternal(
+          context = data.context,
+          stateData = StateVariables(
+            traversedStates = data.stateData.traversedStates,
+            variables = data.stateData.variables ++
+              res.data.stateData.variables
+          ),
+          data = data.data ++ res.data.data
+        )
+      )
+
     }
-
-    val thenArgument = child.tail.headOption match {
-      case Some(t) => t
-      case _ =>
-        throw OperatorException("IfThenElse: requires an expression as second argument")
-    }
-
-    val elseArgument = child.tail.headOption match {
-      case Some(t) => t
-      case _ =>
-        throw OperatorException("IfThenElse: requires an expression as third argument")
-    }
-
-    val testResult : Result = testArument.evaluate(query = query, data = data)
-    val res: Result = if(testResult.score === 1.0) {
-      thenArgument.evaluate(query = query, data = data)
-    } else {
-      elseArgument.evaluate(query = query, data = data)
-    }
-
-    val resData = AnalyzersDataInternal(
-      context = res.data.context,
-      stateData = StateVariables(
-        traversedStates = res.data.stateData.traversedStates,
-        variables = res.data.stateData.variables
-      ),
-      data = testResult.data.data ++ res.data.data
-    )
-
-    Result(score=res.score, data = resData)
+    ifThenElse(children)
   }
 }

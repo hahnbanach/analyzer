@@ -1,11 +1,11 @@
 name := "analyzer"
 
-organization := "io.elegans"
-maintainer := "angelo.leto@elegans.io"
+organization := "com.hahnbanach"
+maintainer := "angelo.leto@hahnbanach.com"
 
 
-lazy val scala213 = "2.13.6"
-lazy val scala30 = "3.0.1"
+lazy val scala213 = "2.13.7"
+lazy val scala30 = "3.1.0"
 
 ThisBuild / scalaVersion := scala213
 

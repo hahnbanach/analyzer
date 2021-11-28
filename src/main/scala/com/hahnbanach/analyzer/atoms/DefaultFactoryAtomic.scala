@@ -36,6 +36,8 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], Map[String, 
       new CosineDistanceAnalyzer(argument, restrictedArgs)),
     ("cosDistanceKeywords", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new CosineDistanceAnalyzer(argument, restrictedArgs)),
+    ("countStateInHistoryAtomic", (argument: List[String], restrictedArgs: Map[String, String]) =>
+      new CountStateInHistoryAtomic(argument, restrictedArgs)),
     ("doubleNumberVariable", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new DoubleNumberVariableAtomic(argument, restrictedArgs)),
     ("existsVariable", (argument: List[String], restrictedArgs: Map[String, String]) =>

@@ -10,7 +10,7 @@ case class Context(
                     stateName: String = ""
                   )
 
-case class AnalyzersDataInternal(
+case class AnalyzersData(
                                   context: Context = Context(),
                                   stateData: StateVariables = StateVariables(),
                                   data: Map[String, Any] = Map.empty[String, Any]

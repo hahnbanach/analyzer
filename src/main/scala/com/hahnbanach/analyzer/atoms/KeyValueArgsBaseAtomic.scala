@@ -59,7 +59,7 @@ trait KeyValueArgsBaseAtomic {
     input
   }
 
-  def mandatoryParameter(argName: String): Map[String, String] => String = {
+  def parameter(argName: String): Map[String, String] => String = {
     optParameter(argName).map(_.getOrElse(
       throw BaseAtomicException(s"Missing mandatory argument in $factoryName: $argName")
     ))

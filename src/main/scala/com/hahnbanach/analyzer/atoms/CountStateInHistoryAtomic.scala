@@ -26,7 +26,7 @@ class CountStateInHistoryAtomic(val arguments: List[String],
       None)
   )
 
-  val state: Map[String, String] => String = mandatoryParameter("state")
+  val state: Map[String, String] => String = parameter("state")
   val maxContext: Map[String, String] => Option[String] = optParameter("maxContext")
 
   private[this] val nRegex: Regex = "^([0-9]+)$".r

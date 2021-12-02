@@ -1,6 +1,6 @@
 package com.hahnbanach.analyzer.atoms
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result, StateVariables}
 import com.hahnbanach.analyzer.util._
 
 import scala.util.Try
@@ -30,9 +30,9 @@ class MatchPatternRegexAtomic(val arguments: List[String], restrictedArgs: Map[S
 
   val regexExtractor = new PatternExtractionRegex(regex)
 
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val res = Try(Result(score = 1.0,
-      AnalyzersDataInternal(
+      AnalyzersData(
         context = data.context,
         stateData = StateVariables(
           traversedStates = data.stateData.traversedStates,

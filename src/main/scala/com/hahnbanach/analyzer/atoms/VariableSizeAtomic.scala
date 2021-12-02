@@ -1,6 +1,6 @@
 package com.hahnbanach.analyzer.atoms
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 /**
   * Created by angelo on 05/05/21.
@@ -27,7 +27,7 @@ class VariableSizeAtomic(val arguments: List[String], restrictedArgs: Map[String
     * @param data the dictionary of variables
     * @return Result score will be N.0 with the size of variable, 0.0 if the variable doesn't exists
     */
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val score = data.stateData.variables.get(varName) match {
       case Some(value) => value.size.toDouble
       case _ => 0.0d

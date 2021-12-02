@@ -1,7 +1,7 @@
 package com.hahnbanach.analyzer.operators
 
 import cats.implicits._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result, StateVariables}
 import com.hahnbanach.analyzer.expressions._
 
 /** Compare Operator
@@ -32,7 +32,7 @@ class GtOperator(child: List[Expression]) extends AbstractOperator(child: List[E
     }
   }
 
-  def evaluate(query: String, data: AnalyzersDataInternal = new AnalyzersDataInternal): Result = {
+  def evaluate(query: String, data: AnalyzersData = new AnalyzersData): Result = {
     val secondArgument = child.headOption match {
       case Some(t) => t
       case _ =>
@@ -48,13 +48,14 @@ class GtOperator(child: List[Expression]) extends AbstractOperator(child: List[E
     val res1: Result = firstArgument.evaluate(query = query, data = data)
     val res2: Result = secondArgument.evaluate(query = query, data = data)
     val score = if(res1.score > res2.score) 1.0 else 0.0
-    val resData = AnalyzersDataInternal(
+    val resData = AnalyzersData(
       context = res1.data.context,
       stateData = StateVariables(
         traversedStates = res1.data.stateData.traversedStates,
         variables = res1.data.stateData.variables ++ res2.data.stateData.variables
       ),
-      data = res1.data.data ++ res2.data.data
+      internal = (res1.data.internal.getOrElse(Map.empty) ++
+        res2.data.internal.getOrElse(Map.empty)).some
     )
     Result(score=score, data = resData)
   }

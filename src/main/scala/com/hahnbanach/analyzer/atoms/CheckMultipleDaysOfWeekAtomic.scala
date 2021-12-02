@@ -15,7 +15,7 @@
 
 package com.hahnbanach.analyzer.atoms
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 import com.hahnbanach.analyzer.util.Time
 
 import java.time.ZoneId
@@ -62,7 +62,7 @@ class CheckMultipleDaysOfWeekAtomic(val arguments: List[String],
     case _ => throw ExceptionAtomic(atomName + ": must have two arguments")
   }
 
-  override def evaluate(query: String, data: AnalyzersDataInternal): Result = {
+  override def evaluate(query: String, data: AnalyzersData): Result = {
     val currentDayOfWeek: Int = Time.dayOfWeekInt(timeZone)
     if (dayList.contains(currentDayOfWeek))
       Result(1.0)

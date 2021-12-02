@@ -4,7 +4,7 @@ package com.hahnbanach.analyzer.analyzers
   * Created by Angelo Leto <angelo.leto@hahnbanach.com> on 03/03/17.
   */
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, StateVariables}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, StateVariables}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -12,7 +12,7 @@ class ComplexAnalyzersExpressionsTests extends AnyFlatSpec with Matchers {
 
   val restrictedArgs = Map.empty[String, String]
   "ComplexAnalyzersExpressionsTests" should "return true if the current hour is between opening and closing hour" in {
-    val data = AnalyzersDataInternal(
+    val data = AnalyzersData(
       stateData = StateVariables(
         variables = Map[String, String]("OPEN_HOUR" -> "8", "CLOSE_HOUR" -> "18", "CURRENT_HOUR" -> "17")
       )

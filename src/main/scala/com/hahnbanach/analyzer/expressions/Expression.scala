@@ -2,7 +2,7 @@ package com.hahnbanach.analyzer.expressions
 
 
 import cats.implicits._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 /**
   * This the basic structure of StarChat Domain Specific Language.
@@ -20,12 +20,12 @@ abstract class Expression(children: List[Expression]) {
     * @return a score (>= 0) which represents its confidence on triggering the state it is in
     */
   def evaluate(query: String,
-               data: AnalyzersDataInternal = AnalyzersDataInternal()): Result
+               data: AnalyzersData = AnalyzersData()): Result
 
   // In case of boolean logic, the threshold above which it says the state should be triggered
   val matchThreshold = 0.0
 
-  def matches(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def matches(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val res = this.evaluate(query, data)
     val bool: Double = if (res.score > matchThreshold) 1.0 else 0.0
     //if (bool === 1.0d) println("DEBUG: Expression: " + this + " matches " + query)

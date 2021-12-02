@@ -1,7 +1,7 @@
 package com.hahnbanach.analyzer.atoms
 
 import cats.implicits._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 class HasTravStateInPositionAtomic(arguments: List[String], restrictedArgs: Map[String, String]) extends AbstractAtomic{
   val state: String = arguments.headOption match {
@@ -19,7 +19,7 @@ class HasTravStateInPositionAtomic(arguments: List[String], restrictedArgs: Map[
 
   override def toString: String = "hasTravStateInPosition(\"" + state + "\", \"" + position + "\")"
 
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     data.stateData.traversedStates.lift(position-1) match {
       case Some(state) => if (state.state === this.state) Result(1) else Result(0)
       case _ => Result(0)

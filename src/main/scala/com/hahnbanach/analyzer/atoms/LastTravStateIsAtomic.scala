@@ -1,6 +1,6 @@
 package com.hahnbanach.analyzer.atoms
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 /**
   * Created by angelo on 16/08/17.
@@ -27,7 +27,7 @@ class LastTravStateIsAtomic(val arguments: List[String], restrictedArgs: Map[Str
     * @param data the data
     * @return Result with 1.0 if the last state is <name> score = 0.0 otherwise
     */
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     data.stateData.traversedStates.lastOption match {
       case Some(t) =>
         t.state match {

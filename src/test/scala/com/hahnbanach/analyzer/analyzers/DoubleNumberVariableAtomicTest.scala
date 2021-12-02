@@ -5,7 +5,7 @@ package com.hahnbanach.analyzer.analyzers
   */
 
 import com.hahnbanach.analyzer.atoms.ExceptionAtomic
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, StateVariables}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, StateVariables}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -13,7 +13,7 @@ class DoubleNumberVariableAtomicTest extends AnyFlatSpec with Matchers {
 
   val restrictedArgs = Map.empty[String, String]
   "doubleNumberVariable" should "return the numerical value of a variable" in {
-    val data = AnalyzersDataInternal(
+    val data = AnalyzersData(
       stateData = StateVariables(
         variables = Map[String, String]("TEST_VARIABLE" -> "100.0")
       )
@@ -23,7 +23,7 @@ class DoubleNumberVariableAtomicTest extends AnyFlatSpec with Matchers {
     analyzerValue.score should be (100.0)
   }
   it should "return the numerical value of a variable, even without default value" in {
-    val data = AnalyzersDataInternal(
+    val data = AnalyzersData(
       stateData = StateVariables(
         variables = Map[String, String]("TEST_VARIABLE" -> "100.0")
       )
@@ -33,7 +33,7 @@ class DoubleNumberVariableAtomicTest extends AnyFlatSpec with Matchers {
     analyzerValue.score should be (100.0)
   }
   it should "return the default value if the variable does not exists" in {
-    val data = AnalyzersDataInternal(
+    val data = AnalyzersData(
       stateData = StateVariables(
         variables = Map[String, String]("TEST_VARIABLE" -> "100.0")
       )
@@ -44,7 +44,7 @@ class DoubleNumberVariableAtomicTest extends AnyFlatSpec with Matchers {
   }
   it should "throw a ExceptionAtomic if the variable does not exists and no default value was passed" in {
     a [ExceptionAtomic] should be thrownBy {
-      val data = AnalyzersDataInternal(
+      val data = AnalyzersData(
         stateData = StateVariables(
           variables = Map[String, String]("TEST_VARIABLE" -> "100.0")
         )
@@ -55,7 +55,7 @@ class DoubleNumberVariableAtomicTest extends AnyFlatSpec with Matchers {
   }
   it should "throw a ExceptionAtomic if the variable does not contains a numerical value" in {
     a [ExceptionAtomic] should be thrownBy {
-      val data = AnalyzersDataInternal(
+      val data = AnalyzersData(
         stateData = StateVariables(
           variables = Map[String, String]("TEST_VARIABLE" -> "hello")
         )
@@ -66,7 +66,7 @@ class DoubleNumberVariableAtomicTest extends AnyFlatSpec with Matchers {
   }
   it should "throw a ExceptionAtomic if the variable does not contains a numerical value, even without default value" in {
     a [ExceptionAtomic] should be thrownBy {
-      val data = AnalyzersDataInternal(
+      val data = AnalyzersData(
         stateData = StateVariables(
           variables = Map[String, String]("TEST_VARIABLE" -> "hello")
         )

@@ -4,7 +4,7 @@
 
 package com.hahnbanach.analyzer.atoms
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 import java.time._
 import scala.util.matching.Regex
@@ -61,7 +61,7 @@ class TimeBetweenAtomic(val arguments: List[String],
 
   val isEvaluateNormalized: Boolean = true
 
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     // Using compareTo and not isBefore / After bc want =
 
     val timeToBeCompared: LocalTime = compareTimeString.isEmpty match {

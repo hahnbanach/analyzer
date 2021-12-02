@@ -1,7 +1,7 @@
 package com.hahnbanach.analyzer.atoms
 
 import cats.implicits._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 import scala.util.matching.Regex
 
@@ -27,7 +27,7 @@ class DeleteVariablesAtomic(val arguments: List[String], restrictedArgs: Map[Str
     }.toMap
 
   private[this] val regex: Regex = parameters.get("regex") match {
-    case Some(t) => t.r()
+    case Some(t) => t.r
     case _ => throw ExceptionAtomic(s"$toString: `regex` argument is mandatory ($usage)")
   }
 
@@ -37,7 +37,7 @@ class DeleteVariablesAtomic(val arguments: List[String], restrictedArgs: Map[Str
    * @param data the dictionary of variables
    * @return Result with 1.0 if at least one variable was found and deleted, 0.0 otherwise
    */
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val variablesCountBefore = data.stateData.variables.size
     val cleanedVariables: Map[String, String] = data.stateData.variables.view
       .filterKeys(key => regex.findFirstIn(key).isEmpty).toMap

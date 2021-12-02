@@ -1,7 +1,7 @@
 package com.hahnbanach.analyzer.operators
 
 import cats.implicits._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result, StateVariables}
 import com.hahnbanach.analyzer.expressions._
 
 /** Binarize Operator
@@ -36,7 +36,7 @@ class BinarizeOperator(child: List[Expression]) extends AbstractOperator(child: 
 
   val binThreshold: Double = 0.00000001d
 
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val res = child.headOption match {
       case Some(arg) => arg.matches(query, data)
       case _ => throw OperatorException("BinarizeOperator: inner expression is empty")
@@ -49,14 +49,15 @@ class BinarizeOperator(child: List[Expression]) extends AbstractOperator(child: 
     else
       Result(
         score = 1.0d,
-        AnalyzersDataInternal(
+        AnalyzersData(
           context = data.context,
           stateData = StateVariables(
             traversedStates = data.stateData.traversedStates,
             variables = data.stateData.variables ++
               res.data.stateData.variables
           ),
-          data = data.data ++ res.data.data
+          internal = (data.internal.getOrElse(Map.empty) ++
+            res.data.internal.getOrElse(Map.empty)).some
         )
       )
   }

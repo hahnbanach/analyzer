@@ -1,7 +1,7 @@
 package com.hahnbanach.analyzer.atoms
 
 import cats.implicits._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 import scala.util.matching.Regex
 
@@ -77,7 +77,7 @@ class IterateOnVariablesAtomic(val arguments: List[String], restrictedArgs: Map[
    * @param data the dictionary of variables
    * @return Result with 1.0 if the variable exists score = 0.0 otherwise
    */
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val runtimeVariables: Map[String, String] = data.stateData.variables
     //fetch the counter value and if not initialized, initialize it
     val (currCounterValue, endIteration) =

@@ -1,6 +1,6 @@
 package com.hahnbanach.analyzer.atoms
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 import scala.util.control.NonFatal
 
@@ -33,7 +33,7 @@ class DoubleNumberVariableAtomic(val arguments: List[String], restrictedArgs: Ma
     * @param data the dictionary of variables
     * @return Result with 1.0 if the variable exists score = 0.0 otherwise
     */
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val score = data.stateData.variables.get(varName) match {
       case Some(value) =>
         try {

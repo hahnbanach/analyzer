@@ -1,6 +1,6 @@
 package com.hahnbanach.analyzer.atoms
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 /**
  * Created by angelo on 26/06/17.
@@ -30,7 +30,7 @@ class SetVariableAtomic(val arguments: List[String], restrictedArgs: Map[String,
    * @param data the dictionary of variables
    * @return Result with 1.0 if the variable exists score = 0.0 otherwise
    */
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     Result(score = 1.0,
       data = data.copy(
         stateData= data.stateData.copy(

@@ -1,11 +1,11 @@
 package com.hahnbanach.analyzer.analyzers
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, DtHistoryItem, StateVariables}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, DtHistoryItem, StateVariables}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class DoubleComparisonOperatorsTests extends AnyFlatSpec with Matchers {
-  val data: AnalyzersDataInternal = AnalyzersDataInternal(
+  val data: AnalyzersData = AnalyzersData(
     stateData = StateVariables(
       traversedStates = Vector.empty[DtHistoryItem],
       variables = Map[String, String](("NUMBER0", "10"),

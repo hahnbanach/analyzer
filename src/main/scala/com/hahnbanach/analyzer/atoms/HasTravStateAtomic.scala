@@ -1,6 +1,6 @@
 package com.hahnbanach.analyzer.atoms
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 /**
   * Created by angelo on 16/08/17.
@@ -29,7 +29,7 @@ class HasTravStateAtomic(val arguments: List[String], restrictedArgs: Map[String
     * @param data the data
     * @return Result with 1.0 if the state exists score = 0.0 otherwise
     */
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     if(data.stateData.traversedStates.map(s => s.state).contains(name)) {
       Result(score = 1.0)
     } else {

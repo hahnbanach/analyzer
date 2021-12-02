@@ -4,7 +4,7 @@ package com.hahnbanach.analyzer.atoms
   * Created by angelo on 05/07/18.
   */
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 import com.hahnbanach.analyzer.util.{ComparisonOperators, Time}
 
 /** Check if the current minutes are Equal, LessOrEqual, Less, Greater, GreaterOrEqual to the first argument
@@ -34,7 +34,7 @@ class CheckMinuteAtomic(val arguments: List[String],
 
   override def toString: String = "checkMinute(\"" + argMinute + ", " + argOperator + "\")"
   val isEvaluateNormalized: Boolean = true
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val minute: Long = Time.minutes(argZone)
     if(ComparisonOperators.compare(minute, argMinute, argOperator))
       Result(score = 1.0)

@@ -1,6 +1,7 @@
 package com.hahnbanach.analyzer.operators
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
+import cats.implicits._
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result, StateVariables}
 import com.hahnbanach.analyzer.expressions._
 
 /**
@@ -30,7 +31,7 @@ class ConjunctionOperator(children: List[Expression]) extends AbstractOperator(c
 
   val binThreshold: Double = 0.00000001d
 
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     def conjunction(l: List[Expression]): Result = {
       val valHead = l.headOption match {
         case Some(arg) => arg.evaluate(query, data)
@@ -38,7 +39,7 @@ class ConjunctionOperator(children: List[Expression]) extends AbstractOperator(c
       }
       if (l.tail.isEmpty) {
         Result(score = valHead.score,
-          AnalyzersDataInternal(
+          AnalyzersData(
             context = data.context,
             stateData = StateVariables(
               traversedStates = data.stateData.traversedStates,
@@ -46,7 +47,8 @@ class ConjunctionOperator(children: List[Expression]) extends AbstractOperator(c
               variables = data.stateData.variables ++
                 valHead.data.stateData.variables
             ),
-            data = data.data ++ valHead.data.data
+            internal = (data.internal.getOrElse(Map.empty) ++
+              valHead.data.internal.getOrElse(Map.empty)).some
           )
         )
       } else {
@@ -56,7 +58,7 @@ class ConjunctionOperator(children: List[Expression]) extends AbstractOperator(c
           Result(score = finalScore, data = data)
         } else {
           Result(score = finalScore,
-            AnalyzersDataInternal(
+            AnalyzersData(
               context = data.context,
               stateData = StateVariables(
                 traversedStates = data.stateData.traversedStates,
@@ -64,7 +66,8 @@ class ConjunctionOperator(children: List[Expression]) extends AbstractOperator(c
                 variables = valTail.data.stateData.variables ++
                   valHead.data.stateData.variables
               ),
-              data = valTail.data.data ++ valHead.data.data
+              internal = (valTail.data.internal.getOrElse(Map.empty) ++
+                valHead.data.internal.getOrElse(Map.empty)).some
             )
           )
         }

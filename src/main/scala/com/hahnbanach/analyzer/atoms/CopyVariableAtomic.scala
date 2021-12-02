@@ -1,7 +1,7 @@
 package com.hahnbanach.analyzer.atoms
 
 import cats.implicits._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 /**
  * Created by angelo.leto@elegans.io on 25/11/20.
@@ -41,7 +41,7 @@ class CopyVariableAtomic(val arguments: List[String], restrictedArgs: Map[String
    * @param data the dictionary of variables
    * @return Result with 1.0 if the source variable was found, 0.0 otherwise
    */
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
 
     val (score: Double, updatedVariables: Map[String, String]) =
       data.stateData.variables.get(sourceVarname) match {

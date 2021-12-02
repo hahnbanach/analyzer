@@ -4,13 +4,13 @@ package com.hahnbanach.analyzer.analyzers
   * Created by Angelo Leto <angelo.leto@hahnbanach.com> on 04/05/21.
   */
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, DtHistoryItem, StateVariables}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, DtHistoryItem, StateVariables}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class RegexAndSizeVariableAtomicTest extends AnyFlatSpec with Matchers {
 
-  val data: AnalyzersDataInternal = AnalyzersDataInternal(
+  val data: AnalyzersData = AnalyzersData(
     stateData = StateVariables(
       traversedStates = Vector.empty[DtHistoryItem],
       variables = Map[String, String](("variable0", "variable value value 0"), ("variable1", "0123456789"))

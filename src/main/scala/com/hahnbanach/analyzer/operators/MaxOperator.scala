@@ -1,7 +1,7 @@
 package com.hahnbanach.analyzer.operators
 
 import cats.implicits._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result, StateVariables}
 import com.hahnbanach.analyzer.expressions._
 
 /**
@@ -25,7 +25,7 @@ class MaxOperator(children: List[Expression]) extends AbstractOperator(children:
     }
   }
 
-  def evaluate(query: String, data: AnalyzersDataInternal = new AnalyzersDataInternal): Result = {
+  def evaluate(query: String, data: AnalyzersData = new AnalyzersData): Result = {
     def compMax(l: List[Expression]): Result = {
       val val1 = l.headOption match {
         case Some(arg) => arg.evaluate(query, data)
@@ -33,14 +33,15 @@ class MaxOperator(children: List[Expression]) extends AbstractOperator(children:
       }
       val resultHead = Result(
         score = val1.score,
-        AnalyzersDataInternal(
+        AnalyzersData(
           context = data.context,
           stateData = StateVariables(
             traversedStates = data.stateData.traversedStates,
             variables = data.stateData.variables ++
               val1.data.stateData.variables
           ),
-          data = data.data ++ val1.data.data
+          internal = (data.internal.getOrElse(Map.empty) ++
+            val1.data.internal.getOrElse(Map.empty)).some
         )
       )
       if (l.tail.isEmpty) {
@@ -50,14 +51,15 @@ class MaxOperator(children: List[Expression]) extends AbstractOperator(children:
         if (val1.score === val2.score)
           Result(
             score = val1.score,
-            AnalyzersDataInternal(
+            AnalyzersData(
               context = data.context,
               stateData = StateVariables(
                 traversedStates = data.stateData.traversedStates,
                 variables = val2.data.stateData.variables ++
                   val1.data.stateData.variables
               ),
-              data = val2.data.data ++ val1.data.data
+              internal = (val2.data.internal.getOrElse(Map.empty) ++
+                val1.data.internal.getOrElse(Map.empty)).some
             )
           )
         else if(val1.score >= val2.score) resultHead else val2

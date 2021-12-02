@@ -1,7 +1,7 @@
 package com.hahnbanach.analyzer.operators
 
 import cats.implicits._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result, StateVariables}
 import com.hahnbanach.analyzer.expressions._
 
 /**
@@ -27,7 +27,7 @@ class DisjunctionOperator(children: List[Expression]) extends AbstractOperator(c
 
   val binThreshold: Double = 0.00000001d
 
-  def evaluate(query: String, data: AnalyzersDataInternal = new AnalyzersDataInternal): Result = {
+  def evaluate(query: String, data: AnalyzersData = new AnalyzersData): Result = {
     def compDisjunction(l: List[Expression]): Result = {
       val res = l.headOption match {
         case Some(arg) => arg.evaluate(query, data)
@@ -35,19 +35,20 @@ class DisjunctionOperator(children: List[Expression]) extends AbstractOperator(c
       }
       if (l.tail.isEmpty) {
         Result(score = 1.0d - res.score,
-          AnalyzersDataInternal(
+          AnalyzersData(
             context = data.context,
             stateData = StateVariables(
               traversedStates = data.stateData.traversedStates,
               variables = data.stateData.variables ++ res.data.stateData.variables
             ),
-            data = data.data ++ res.data.data
+            internal = (data.internal.getOrElse(Map.empty) ++
+              res.data.internal.getOrElse(Map.empty)).some
           )
         )
       } else {
         val resTail = compDisjunction(l.tail)
         Result(score = (1.0d - res.score) * resTail.score,
-          AnalyzersDataInternal(
+          AnalyzersData(
             context = data.context,
             stateData = StateVariables(
               traversedStates = data.stateData.traversedStates,
@@ -55,7 +56,8 @@ class DisjunctionOperator(children: List[Expression]) extends AbstractOperator(c
               variables = resTail.data.stateData.variables ++
                 res.data.stateData.variables
             ),
-            data = resTail.data.data ++ res.data.data
+            internal = (resTail.data.internal.getOrElse(Map.empty) ++
+              res.data.internal.getOrElse(Map.empty)).some
           )
         )
       }

@@ -1,6 +1,6 @@
 package com.hahnbanach.analyzer.atoms
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 /**
   * Created by mal on 20/02/2017.
@@ -22,7 +22,7 @@ class RegularExpressionAtomic(arguments: List[String], restrictedArgs: Map[Strin
   val isEvaluateNormalized: Boolean = false
   private[this] val rx = re.r
 
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val score = rx.findAllIn(query).toList.length
     Result(score = score)
   }

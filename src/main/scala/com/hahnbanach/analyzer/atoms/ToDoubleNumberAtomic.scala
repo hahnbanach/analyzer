@@ -4,7 +4,7 @@ package com.hahnbanach.analyzer.atoms
   * Created by angelo on 19/10/18.
   */
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 /** Double Atomic
   *
@@ -20,7 +20,7 @@ class ToDoubleNumberAtomic(val arguments: List[String],
 
   override def toString: String = "Double(\"" + number + "\")"
   val isEvaluateNormalized: Boolean = false
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     Result(score = number)
   }
 }

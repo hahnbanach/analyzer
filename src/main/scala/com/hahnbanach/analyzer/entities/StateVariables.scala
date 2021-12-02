@@ -1,5 +1,6 @@
 package com.hahnbanach.analyzer.entities
 
-class StateVariables {
-
-}
+case class StateVariables(
+                           traversedStates: Vector[DtHistoryItem] = Vector.empty[DtHistoryItem],
+                           variables: Map[String, String] = Map.empty[String, String]
+                         )

@@ -1,7 +1,7 @@
 package com.hahnbanach.analyzer.operators
 
 import cats.implicits._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result, StateVariables}
 import com.hahnbanach.analyzer.expressions._
 
 /**
@@ -25,7 +25,7 @@ class BooleanAndOperator(children: List[Expression]) extends AbstractOperator(ch
     }
   }
 
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     def booleanAnd(l: List[Expression]): Result = {
       val valHead = l.headOption match {
         case Some(arg) => arg.matches(query, data)
@@ -33,7 +33,7 @@ class BooleanAndOperator(children: List[Expression]) extends AbstractOperator(ch
       }
       if (l.tail.isEmpty) {
         Result(score = valHead.score,
-          AnalyzersDataInternal(
+          AnalyzersData(
             context = data.context,
             stateData = StateVariables(
               traversedStates = data.stateData.traversedStates,
@@ -41,7 +41,8 @@ class BooleanAndOperator(children: List[Expression]) extends AbstractOperator(ch
               variables = data.stateData.variables ++
                 valHead.data.stateData.variables
             ),
-            data = data.data ++ valHead.data.data
+            internal = (data.internal.getOrElse(Map.empty) ++
+              valHead.data.internal.getOrElse(Map.empty)).some
           )
         )
       } else {
@@ -51,7 +52,7 @@ class BooleanAndOperator(children: List[Expression]) extends AbstractOperator(ch
           Result(score = finalScore, data = data)
         } else {
           Result(score = finalScore,
-            AnalyzersDataInternal(
+            AnalyzersData(
               context = data.context,
               stateData = StateVariables(
               traversedStates = data.stateData.traversedStates,
@@ -59,7 +60,8 @@ class BooleanAndOperator(children: List[Expression]) extends AbstractOperator(ch
               variables = valTail.data.stateData.variables ++
                 valHead.data.stateData.variables
               ),
-              data = valTail.data.data ++ valHead.data.data
+              internal = (valTail.data.internal.getOrElse(Map.empty) ++
+                valHead.data.internal.getOrElse(Map.empty)).some
             )
           )
         }

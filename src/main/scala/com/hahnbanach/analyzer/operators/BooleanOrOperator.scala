@@ -1,7 +1,7 @@
 package com.hahnbanach.analyzer.operators
 
 import cats.implicits._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result, StateVariables}
 import com.hahnbanach.analyzer.expressions._
 
 /**
@@ -26,7 +26,7 @@ class BooleanOrOperator(children: List[Expression]) extends AbstractOperator(chi
     }
   }
 
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     def booleanOr(l: List[Expression]): Result = {
       val res = l.headOption match {
         case Some(arg) => arg.matches(query, data)
@@ -34,7 +34,7 @@ class BooleanOrOperator(children: List[Expression]) extends AbstractOperator(chi
       }
       if (l.tail.isEmpty) {
         Result(score = 1.0d - res.score,
-          AnalyzersDataInternal(
+          AnalyzersData(
             context = data.context,
             stateData = StateVariables(
               traversedStates = data.stateData.traversedStates,
@@ -42,13 +42,14 @@ class BooleanOrOperator(children: List[Expression]) extends AbstractOperator(chi
               variables = data.stateData.variables ++
                 res.data.stateData.variables
             ),
-            data = data.data ++ res.data.data
+            internal = (data.internal.getOrElse(Map.empty) ++
+              res.data.internal.getOrElse(Map.empty)).some
           )
         )
       } else {
         val resTail = booleanOr(l.tail)
         Result(score = (1.0d - res.score) * resTail.score,
-          AnalyzersDataInternal(
+          AnalyzersData(
             context = data.context,
             stateData = StateVariables(
               traversedStates = data.stateData.traversedStates,
@@ -56,7 +57,8 @@ class BooleanOrOperator(children: List[Expression]) extends AbstractOperator(chi
               variables = resTail.data.stateData.variables ++
                 res.data.stateData.variables
             ),
-            data = resTail.data.data ++ res.data.data
+            internal = (resTail.data.internal.getOrElse(Map.empty) ++
+              res.data.internal.getOrElse(Map.empty)).some
           )
         )
       }

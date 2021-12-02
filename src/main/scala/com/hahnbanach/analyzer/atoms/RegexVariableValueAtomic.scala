@@ -1,6 +1,6 @@
 package com.hahnbanach.analyzer.atoms
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 import scala.util.matching.Regex
 
@@ -32,7 +32,7 @@ class RegexVariableValueAtomic(val arguments: List[String], restrictedArgs: Map[
     * @param data the dictionary of variables
     * @return Result score will be N.0 with the count of matches, 0.0 otherwise
     */
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val score = data.stateData.variables.get(varName) match {
       case Some(value) => regex.findAllIn(value).toList.size.toDouble
       case _ => 0.0d

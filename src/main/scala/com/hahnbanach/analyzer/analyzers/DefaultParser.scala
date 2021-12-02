@@ -6,7 +6,7 @@ package com.hahnbanach.analyzer.analyzers
 
 import cats.implicits._
 import com.hahnbanach.analyzer.atoms._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 import com.hahnbanach.analyzer.expressions.Expression
 import com.hahnbanach.analyzer.interfaces.{AtomicFactoryTrait, OperatorFactoryTrait}
 import com.hahnbanach.analyzer.operators._
@@ -35,7 +35,7 @@ abstract class DefaultParser(command: String, restrictedArgs: Map[String, String
   override def toString: String = operator.toString
   /** Read a sentence and produce a score (the higher, the more confident)
     */
-  def evaluate(sentence: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(sentence: String, data: AnalyzersData = AnalyzersData()): Result = {
     val res = operator.evaluate(query = sentence, data = data)
     //if (res.score > 0) println("DEBUG: DefaultParser: '" + this + "' evaluated to " + res)
     res

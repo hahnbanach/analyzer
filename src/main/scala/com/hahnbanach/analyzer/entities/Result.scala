@@ -1,3 +1,6 @@
 package com.hahnbanach.analyzer.entities
 
-case class Result(score: Double, data: AnalyzersDataInternal = AnalyzersDataInternal())
+case class Result(
+                   score: Double,
+                   data: AnalyzersData = AnalyzersData()
+                 )

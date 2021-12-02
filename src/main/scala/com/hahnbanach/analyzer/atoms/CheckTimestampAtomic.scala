@@ -4,7 +4,7 @@ package com.hahnbanach.analyzer.atoms
   * Created by angelo on 05/07/18.
   */
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 import com.hahnbanach.analyzer.util.{ComparisonOperators, Time}
 
 /** Check if the current time is Equal, LessOrEqual, Less, Greater, GreaterOrEqual to the argument time in EPOC
@@ -27,7 +27,7 @@ class CheckTimestampAtomic(val arguments: List[String],
 
   override def toString: String = "checkTime(\"" + argTimestamp + ", " + argOperator + "\")"
   val isEvaluateNormalized: Boolean = true
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val currTimestamp: Long = Time.timestampEpoc
     if(ComparisonOperators.compare(currTimestamp, argTimestamp, argOperator))
       Result(score = 1.0)

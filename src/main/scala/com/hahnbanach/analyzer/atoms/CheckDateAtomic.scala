@@ -4,7 +4,7 @@
 
 package com.hahnbanach.analyzer.atoms
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 import com.hahnbanach.analyzer.util.ComparisonOperators
 
 import java.time.format.DateTimeFormatter
@@ -61,7 +61,7 @@ class CheckDateAtomic(val arguments: List[String],
 
   val isEvaluateNormalized: Boolean = true
 
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
 
     val timeToBeCompared: LocalDateTime = timeToBeComparedString.isEmpty match {
       case true => LocalDateTime.now(timeZone).plusNanos(this.shift.toNanos)

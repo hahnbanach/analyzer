@@ -1,7 +1,7 @@
 package com.hahnbanach.analyzer.atoms
 
 import cats.implicits._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 import com.hahnbanach.analyzer.util._
 
 /**
@@ -13,7 +13,7 @@ import com.hahnbanach.analyzer.util._
 class CosineDistanceAnalyzer(val arguments: List[String], restrictedArgs: Map[String, String]) extends AbstractAtomic {
   override def toString: String = "cosDistanceKeywords(\"" + arguments + "\")"
   val isEvaluateNormalized: Boolean = true
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     // 1- tokenize
     val queryTokens = query.split("\\W").filter(_ =!= "")
 

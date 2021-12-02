@@ -1,7 +1,7 @@
 package com.hahnbanach.analyzer.atoms
 
 import cats.implicits._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 import scala.util.matching.Regex
 
 /** Count states on history
@@ -29,7 +29,7 @@ class CountStateInHistoryAtomic(val arguments: List[String],
 
   private[this] val nRegex: Regex = "^([0-9]+)$".r
 
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val stateName = state(data.stateData.variables)
     val maxCtxtSize = maxContext(data.stateData.variables) match {
       case nRegex(value) => value.toInt

@@ -1,7 +1,7 @@
 package com.hahnbanach.analyzer.atoms
 
 import cats.implicits._
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 /**
   * Created by angelo on 16/08/17.
@@ -29,7 +29,7 @@ class PrevTravStateIsAtomic(val arguments: List[String], restrictedArgs: Map[Str
     * @param data the data
     * @return Result with 1.0 if the penultimate state is <name> score = 0.0 otherwise
     */
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val listLength = data.stateData.traversedStates.length
     if(listLength >= 2 && data.stateData.traversedStates(listLength-2).state === name) {
       Result(score = 1.0)

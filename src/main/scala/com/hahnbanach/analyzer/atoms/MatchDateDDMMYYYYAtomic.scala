@@ -1,6 +1,6 @@
 package com.hahnbanach.analyzer.atoms
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result, StateVariables}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result, StateVariables}
 import com.hahnbanach.analyzer.util._
 
 import scala.util.Try
@@ -34,9 +34,9 @@ class MatchDateDDMMYYYYAtomic(val arguments: List[String], restrictedArgs: Map[S
     * @param data the dictionary of variables (not used in this analyzer)
     * @return Result with 1.0 the date on extracted_variables if the pattern matches, score = 0.0 otherwise
     */
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val res = Try(Result(score = 1.0,
-        AnalyzersDataInternal(
+        AnalyzersData(
           context = data.context,
           stateData = StateVariables(
           traversedStates = data.stateData.traversedStates,

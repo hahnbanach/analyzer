@@ -1,6 +1,6 @@
 package com.hahnbanach.analyzer.atoms
 
-import com.hahnbanach.analyzer.entities.{AnalyzersDataInternal, Result}
+import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
 /**
   * Created by mal on 20/02/2017.
@@ -18,7 +18,7 @@ class KeywordAtomic(val arguments: List[String], restrictedArgs: Map[String, Str
   override def toString: String = "keyword(\"" + keyword + "\")"
   val isEvaluateNormalized: Boolean = true
   private[this] val rx = {"""\b""" + keyword + """\b"""}.r
-  def evaluate(query: String, data: AnalyzersDataInternal = AnalyzersDataInternal()): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val freq = rx.findAllIn(query).toList.length
     val queryLength = """\S+""".r.findAllIn(query).toList.length
     //if (freq > 0) println("DEBUG: KeywordAtomic: '" + keyword + "' found " + freq +

@@ -48,8 +48,6 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], Map[String, 
       new HasTravStateInPositionAtomic(argument, restrictedArgs)),
     ("hasTravStateInPositionRev", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new HasTravStateInPositionRevAtomic(argument, restrictedArgs)),
-    ("isServiceOpen", (argument: List[String], restrictedArgs: Map[String, String]) =>
-      new IsServiceOpenAtomic(argument, restrictedArgs)),
     ("iterateOnVariables", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new IterateOnVariablesAtomic(argument, restrictedArgs)),
     ("keyword", (argument: List[String], restrictedArgs: Map[String, String]) =>
@@ -70,8 +68,6 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], Map[String, 
       new RegexVariableValueAtomic(argument, restrictedArgs)),
     ("resetVariable", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new ResetVariableAtomic(argument, restrictedArgs)),
-    ("setServiceOpening", (argument: List[String], restrictedArgs: Map[String, String]) =>
-      new SetServiceOpeningAtomic(argument, restrictedArgs)),
     ("setVariable", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new SetVariableAtomic(argument, restrictedArgs)),
     ("timeBetween", (argument: List[String], restrictedArgs: Map[String, String]) =>

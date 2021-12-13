@@ -12,6 +12,8 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], Map[String, 
       new CheckDateAtomic(argument, restrictedArgs)),
     ("checkDayOfMonth", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new CheckDayOfMonthAtomic(argument, restrictedArgs)),
+    ("compareVariablesValue", (argument: List[String], restrictedArgs: Map[String, String]) =>
+      new CompareVariablesValueAtomic(argument, restrictedArgs)),
     ("checkDayOfWeek", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new CheckDayOfWeekAtomic(argument, restrictedArgs)),
     ("checkHour", (argument: List[String], restrictedArgs: Map[String, String]) =>

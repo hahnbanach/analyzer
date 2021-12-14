@@ -19,6 +19,11 @@ class CountStateInHistoryAtomic(val arguments: List[String],
       "state name to count",
       true,
       None),
+    "floor" -> (
+      "floor value, used as a base",
+      false,
+      "0".some
+    ),
     "maxContext" -> (
       "restrict the count to a limited amount of states starting from the end of the history," +
         "if not provided count on the entire history",
@@ -28,11 +33,16 @@ class CountStateInHistoryAtomic(val arguments: List[String],
 
   val state: Map[String, String] => String = parameter("state")
   val maxContext: Map[String, String] => Option[String] = optParameter("maxContext")
+  val floor: Map[String, String] => Option[String] = optParameter("floor")
 
   private[this] val nRegex: Regex = "^([0-9]+)$".r
 
   def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val stateName = state(data.stateData.variables)
+    val floorValue = floor(data.stateData.variables) match {
+      case Some(v) => v.toDouble
+      case _ => 0.0d
+    }
     val maxCtxSize = maxContext(data.stateData.variables).getOrElse("") match {
       case nRegex(value) => value.toInt
       case _ => data.stateData.variables.size
@@ -40,6 +50,7 @@ class CountStateInHistoryAtomic(val arguments: List[String],
     val count = data.stateData.traversedStates.reverse.take(maxCtxSize).count(s => {
       s.state === stateName
     })
-    Result(count, data)
+    val finalCount = floorValue + count
+    Result(finalCount, data)
   }
 }

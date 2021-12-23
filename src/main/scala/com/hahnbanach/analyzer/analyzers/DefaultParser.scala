@@ -5,7 +5,6 @@ package com.hahnbanach.analyzer.analyzers
   */
 
 import cats.implicits._
-import com.hahnbanach.analyzer.atoms._
 import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 import com.hahnbanach.analyzer.expressions.Expression
 import com.hahnbanach.analyzer.interfaces.{AtomicFactoryTrait, OperatorFactoryTrait}
@@ -170,7 +169,7 @@ abstract class DefaultParser(command: String, restrictedArgs: Map[String, String
       commandBuffer = "",
       argumentBuffer = "",
       arguments = List.empty[String],
-      commandTree = new ConjunctionOperator(List.empty[Expression])
+      commandTree = new NeutralOperator(List.empty[Expression])
     )
 
   }

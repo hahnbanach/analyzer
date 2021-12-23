@@ -30,6 +30,7 @@ class DefaultFactoryOperator extends OperatorFactoryTrait[List[Expression]] {
     ("lte", (argument: List[Expression]) => new LteOperator(argument)),
     ("max", (argument: List[Expression]) => new MaxOperator(argument)),
     ("maximum", (argument: List[Expression]) => new MaxOperator(argument)),
+    ("neutral", (argument: List[Expression]) => new NeutralOperator(argument)),
     ("or", (argument: List[Expression]) => new DisjunctionOperator(argument))
   )
 

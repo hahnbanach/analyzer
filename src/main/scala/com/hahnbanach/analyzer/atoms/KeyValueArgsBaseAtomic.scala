@@ -42,6 +42,9 @@ trait KeyValueArgsBaseAtomic {
       val argsComps = argsComponents(head)
       val varName = argsComps._1
       val isVariable = argsComps._2
+      if(! argumentsDescription.contains(varName)) {
+        throw BaseAtomicException(s"$factoryName: argument not supported: Name($varName) isVariable($isVariable)")
+      }
       (varName, (isVariable, last))
     }).toMap
   }

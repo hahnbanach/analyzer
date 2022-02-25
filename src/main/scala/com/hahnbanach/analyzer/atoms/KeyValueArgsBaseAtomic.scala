@@ -33,7 +33,7 @@ trait KeyValueArgsBaseAtomic {
     }
   }
 
-  val argMap: Map[String, (Boolean, String)] = if(arguments.length % 2 != 0){
+  def argMap: Map[String, (Boolean, String)] = if(arguments.length % 2 != 0) {
     throw BaseAtomicException(usage)
   } else {
     arguments.sliding(2,2).map(l => {

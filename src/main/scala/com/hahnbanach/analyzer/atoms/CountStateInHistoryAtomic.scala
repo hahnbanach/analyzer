@@ -10,8 +10,8 @@ import scala.util.matching.Regex
   */
 class CountStateInHistoryAtomic(val arguments: List[String],
                                 restrictedArgs: Map[String, String]) extends AbstractAtomic with KeyValueArgsBaseAtomic {
-  override def toString: String = "countStateInHistoryAtomic"
-  override val factoryName: String = "countStateInHistoryAtomic"
+  override def toString: String = "countStateInHistory"
+  override val factoryName: String = "countStateInHistory"
   val isEvaluateNormalized: Boolean = false
   override val argumentsDescription: Map[String, (String, Boolean, Option[String])] = Map(
     //name -> explanation, default (if provided then arg is optional)
@@ -45,7 +45,7 @@ class CountStateInHistoryAtomic(val arguments: List[String],
     }
     val maxCtxSize = maxContext(data.stateData.variables).getOrElse("") match {
       case nRegex(value) => value.toInt
-      case _ => data.stateData.variables.size
+      case _ => data.stateData.traversedStates.size
     }
     val count = data.stateData.traversedStates.reverse.take(maxCtxSize).count(s => {
       s.state === stateName

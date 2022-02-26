@@ -5,7 +5,6 @@ package com.hahnbanach.analyzer.util
   */
 
 import breeze.linalg._
-import breeze.linalg.functions._
 import cats.implicits._
 
 //https://github.com/scalanlp/breeze/wiki/Linear-Algebra-Cheat-Sheet

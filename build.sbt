@@ -5,19 +5,19 @@ maintainer := "angelo.leto@hahnbanach.com"
 
 
 lazy val scala213 = "2.13.7"
-lazy val scala30 = "3.1.0"
+lazy val scala3 = "3.1.1"
 
 ThisBuild / scalaVersion := scala213
 
-crossScalaVersions := Seq(scala213)
+crossScalaVersions := Seq(scala3, scala213)
 
 resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/releases/",
   Resolver.bintrayRepo("hseeberger", "maven"))
 
 libraryDependencies ++= {
-  val breezeVersion	= "1.2"
-  val catsVersion = "2.6.1"
-  val scalatestVersion	= "3.2.5"
+  val breezeVersion	= "2.0.1-RC1"
+  val catsVersion = "2.7.0"
+  val scalatestVersion	= "3.2.11"
   val scoptVersion	= "4.0.1"
   val sprayJsonVersion = "1.3.6"
   Seq(
@@ -45,13 +45,13 @@ git.useGitDescribe := true
 fork in Test := true
 
 // do not buffer test output
-logBuffered in Test := false
+Test / logBuffered := false
 
 releaseCrossBuild := true
 
 publishMavenStyle := true
 
-publishArtifact in Test := false
+Test / publishArtifact := false
 
 pomIncludeRepository := { _ => false }
 

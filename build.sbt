@@ -9,7 +9,7 @@ lazy val scala3 = "3.1.1"
 
 ThisBuild / scalaVersion := scala213
 
-crossScalaVersions := Seq(scala3, scala213)
+crossScalaVersions := Seq(scala213)
 
 resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/releases/",
   Resolver.bintrayRepo("hseeberger", "maven"))

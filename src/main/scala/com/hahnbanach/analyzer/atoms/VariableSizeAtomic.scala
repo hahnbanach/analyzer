@@ -29,7 +29,7 @@ class VariableSizeAtomic(val arguments: List[String], restrictedArgs: Map[String
     */
   def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val score = data.stateData.variables.get(varName) match {
-      case Some(value) => value.size.toDouble
+      case Some(value) => value.length.toDouble
       case _ => 0.0d
     }
     Result(score = score)

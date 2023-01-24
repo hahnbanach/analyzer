@@ -18,7 +18,7 @@ class ToDoubleNumberAtomic(val arguments: List[String],
     case _ => throw ExceptionAtomic("DoubleNumberAtomic: must have one argument")
   }
 
-  override def toString: String = "Double(\"" + number + "\")"
+  override def toString: String = s"toDouble(\"$number\")"
   val isEvaluateNormalized: Boolean = false
   def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     Result(score = number)

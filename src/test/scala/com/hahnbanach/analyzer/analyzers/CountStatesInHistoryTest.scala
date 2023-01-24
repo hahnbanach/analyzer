@@ -1,11 +1,10 @@
 package com.hahnbanach.analyzer.analyzers
 
-import com.hahnbanach.analyzer.atoms.BaseAtomicException
 import com.hahnbanach.analyzer.entities.{AnalyzersData, DtHistoryItem, DtHistoryType, StateVariables}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class CountStatesInHistoryTests extends AnyFlatSpec with Matchers {
+class CountStatesInHistoryTest extends AnyFlatSpec with Matchers {
   val data: AnalyzersData = AnalyzersData(
     stateData = StateVariables(
       traversedStates = Vector[DtHistoryItem](

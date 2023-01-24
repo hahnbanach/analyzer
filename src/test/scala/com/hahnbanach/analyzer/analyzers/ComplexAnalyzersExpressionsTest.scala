@@ -8,7 +8,7 @@ import com.hahnbanach.analyzer.entities.{AnalyzersData, StateVariables}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class ComplexAnalyzersExpressionsTests extends AnyFlatSpec with Matchers {
+class ComplexAnalyzersExpressionsTest extends AnyFlatSpec with Matchers {
 
   val restrictedArgs = Map.empty[String, String]
   "ComplexAnalyzersExpressionsTests" should "return true if the current hour is between opening and closing hour" in {

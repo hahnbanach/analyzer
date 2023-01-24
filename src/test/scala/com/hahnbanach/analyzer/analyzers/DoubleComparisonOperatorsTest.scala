@@ -4,7 +4,7 @@ import com.hahnbanach.analyzer.entities.{AnalyzersData, DtHistoryItem, StateVari
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class DoubleComparisonOperatorsTests extends AnyFlatSpec with Matchers {
+class DoubleComparisonOperatorsTest extends AnyFlatSpec with Matchers {
   val data: AnalyzersData = AnalyzersData(
     stateData = StateVariables(
       traversedStates = Vector.empty[DtHistoryItem],

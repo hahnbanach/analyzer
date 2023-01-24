@@ -22,6 +22,7 @@ class DefaultFactoryOperator extends OperatorFactoryTrait[List[Expression]] {
     ("bor", (argument: List[Expression]) => new BooleanOrOperator(argument)),
     ("conjunction", (argument: List[Expression]) => new ConjunctionOperator(argument)),
     ("disjunction", (argument: List[Expression]) => new DisjunctionOperator(argument)),
+    ("division", (argument: List[Expression]) => new DivisionOperator(argument)),
     ("eq", (argument: List[Expression]) => new EqOperator(argument)),
     ("gt", (argument: List[Expression]) => new GtOperator(argument)),
     ("gte", (argument: List[Expression]) => new GteOperator(argument)),
@@ -31,7 +32,9 @@ class DefaultFactoryOperator extends OperatorFactoryTrait[List[Expression]] {
     ("max", (argument: List[Expression]) => new MaxOperator(argument)),
     ("maximum", (argument: List[Expression]) => new MaxOperator(argument)),
     ("neutral", (argument: List[Expression]) => new NeutralOperator(argument)),
-    ("or", (argument: List[Expression]) => new DisjunctionOperator(argument))
+    ("or", (argument: List[Expression]) => new DisjunctionOperator(argument)),
+    ("product", (argument: List[Expression]) => new ProductOperator(argument)),
+    ("sum", (argument: List[Expression]) => new SumOperator(argument))
   )
 
   val operations: Set[String] = functionsMap.keys.toSet

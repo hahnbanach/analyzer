@@ -62,6 +62,8 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], Map[String, 
       new MatchPatternRegexAtomic(argument, restrictedArgs)),
     ("modulusVariable", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new ModulusVariableAtomic(argument, restrictedArgs)),
+    ("parameters", (argument: List[String], restrictedArgs: Map[String, String]) =>
+      new ParametersAtomic(argument, restrictedArgs)),
     ("prevTravStateIs", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new PrevTravStateIsAtomic(argument, restrictedArgs)),
     ("regex", (argument: List[String], restrictedArgs: Map[String, String]) =>

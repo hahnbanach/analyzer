@@ -30,20 +30,18 @@ class DivisionOperator(child: List[Expression]) extends AbstractOperator(child: 
   }
 
   def evaluate(query: String, data: AnalyzersData = new AnalyzersData): Result = {
-    val secondArgument = child.headOption match {
-      case Some(t) => t
-      case _ =>
-        throw OperatorException("DivisionOperator: requires an expression as first argument")
-    }
-
-    val firstArgument = child.tail.headOption match {
-      case Some(t) => t
+    val res2 = child.headOption match {
+      case Some(t) => t.evaluate(query = query, data = data)
       case _ =>
         throw OperatorException("DivisionOperator: requires an expression as second argument")
     }
 
-    val res1: Result = firstArgument.evaluate(query = query, data = data)
-    val res2: Result = secondArgument.evaluate(query = query, data = data)
+    val res1 = child.tail.headOption match {
+      case Some(t) => t.evaluate(query = query, data = data)
+      case _ =>
+        throw OperatorException("DivisionOperator: requires an expression as first argument")
+    }
+
     val score = if(res2.score =!= 0.0d) {
       res1.score / res2.score
     } else {

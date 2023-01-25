@@ -36,6 +36,7 @@ class DefaultFactoryOperator extends OperatorFactoryTrait[List[Expression]] {
     ("neutral", (argument: List[Expression]) => new NeutralOperator(argument)),
     ("or", (argument: List[Expression]) => new DisjunctionOperator(argument)),
     ("product", (argument: List[Expression]) => new ProductOperator(argument)),
+    ("scoreToVariable", (argument: List[Expression]) => new ScoreToVariableOperator(argument)),
     ("sum", (argument: List[Expression]) => new SumOperator(argument))
   )
 

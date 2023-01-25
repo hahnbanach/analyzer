@@ -64,4 +64,15 @@ class ArithmeticOperatorsTest extends AnyFlatSpec with Matchers {
     analyzerValue.score shouldBe -40.0d
   }
 
+  "ceil" should s"return 4.0d" in {
+    val analyzer = new DefaultAnalyzer(s"""ceil(toDouble("3.801"))""", restrictedArgs)
+    val analyzerValue = analyzer.evaluate("", data)
+    analyzerValue.score shouldBe 4.0d
+  }
+
+  "floor" should s"return 4.0d" in {
+    val analyzer = new DefaultAnalyzer(s"""floor(toDouble("4.801"))""", restrictedArgs)
+    val analyzerValue = analyzer.evaluate("", data)
+    analyzerValue.score shouldBe 4.0d
+  }
 }

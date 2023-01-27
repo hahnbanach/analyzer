@@ -12,24 +12,24 @@ import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
   *
   * @param arguments: <variable>
   */
-class VariableSizeAtomic(val arguments: List[String], restrictedArgs: Map[String, String]) extends AbstractAtomic {
+class VariableBytesCountAtomic(val arguments: List[String], restrictedArgs: Map[String, String]) extends AbstractAtomic {
   val varName: String = arguments.headOption match {
     case Some(t) => t
-    case _ => throw ExceptionAtomic("VariableSizeAtomic: must have a variable name")
+    case _ => throw ExceptionAtomic("variableBytesCount: must have a variable name")
   }
 
-  override def toString: String = "variableSize"
+  override def toString: String = "variableBytesCount"
   val isEvaluateNormalized: Boolean = true
 
-  /** Calculate the size of the content of a variable <varname>
+  /** Calculate the size in bytes of the content of a variable <varname>
     *
     * @param query the user query
     * @param data the dictionary of variables
-    * @return Result score will be N.0 with the size of variable, 0.0 if the variable doesn't exists
+    * @return Result score will be N.0 with the size of variable in byte, 0.0 if the variable doesn't exists
     */
   def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val score = data.stateData.variables.get(varName) match {
-      case Some(value) => value.length.toDouble
+      case Some(value) => value.getBytes.length.toDouble
       case _ => 0.0d
     }
     Result(score = score)

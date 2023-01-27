@@ -80,8 +80,12 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], Map[String, 
       new ToDoubleNumberAtomic(argument, restrictedArgs)),
     ("vOneKeyword", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new KeywordAtomic(argument, restrictedArgs)),
+    ("unescapedSetVariable", (argument: List[String], restrictedArgs: Map[String, String]) =>
+      new UnescapedSetVariableAtomic(argument, restrictedArgs)),
     ("variableSize", (argument: List[String], restrictedArgs: Map[String, String]) =>
-      new VariableSizeAtomic(argument, restrictedArgs))
+      new VariableSizeAtomic(argument, restrictedArgs)),
+    ("variableBytesCount", (argument: List[String], restrictedArgs: Map[String, String]) =>
+      new VariableBytesCountAtomic(argument, restrictedArgs))
   )
 
   val operations: Set[String] = functionsMap.keys.toSet

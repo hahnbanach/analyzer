@@ -1,6 +1,6 @@
 package com.hahnbanach.analyzer.atoms
 
-import cats.implicits.*
+import cats.implicits._
 import com.hahnbanach.analyzer.atoms.{AbstractAtomic, BaseAtomicException, KeyValueArgsBaseAtomic}
 import com.hahnbanach.analyzer.entities.{AnalyzersData, Result, StateVariables}
 import com.hahnbanach.analyzer.util.Time

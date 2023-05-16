@@ -4,7 +4,7 @@ package com.hahnbanach.analyzer.atoms
   * Created by mal on 20/02/2017.
   */
 
-import com.hahnbanach.analyzer.interfaces.*
+import com.hahnbanach.analyzer.interfaces.AtomicFactoryTrait
 
 class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], Map[String, String]] {
   val functionsMap: Map[String, (List[String], Map[String, String]) => AbstractAtomic] = Map(

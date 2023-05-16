@@ -5,7 +5,7 @@ maintainer := "angelo.leto@hahnbanach.com"
 
 
 lazy val scala213 = "2.13.10"
-lazy val scala3 = "3.2.0"
+lazy val scala3 = "3.2.2"
 
 ThisBuild / scalaVersion := scala213
 
@@ -42,7 +42,7 @@ enablePlugins(UniversalPlugin)
 
 git.useGitDescribe := true
 
-fork in Test := true
+Test / fork := true
 
 // do not buffer test output
 Test / logBuffered := false

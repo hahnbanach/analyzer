@@ -54,5 +54,4 @@ class GenericAnalyzersTest extends AnyFlatSpec with Matchers {
     val firstOccurrenceOfFakeOperator = a2.firstOccurrenceOfOperator("FakeOperator")
     firstOccurrenceOfFakeOperator.shouldEqual(None)
   }
-
 }

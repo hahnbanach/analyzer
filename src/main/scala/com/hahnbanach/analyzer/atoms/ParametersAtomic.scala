@@ -2,7 +2,9 @@ package com.hahnbanach.analyzer.atoms
 
 import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 
-/** just export Strings
+/** just export Strings for operator: wrap the string as atom argument
+  *   in this way it can be used to pass a string to an operator see for
+  *   example ScoreToVariable operator
   *
   * Created by Angelo Leto on 18/01/2023.
   */

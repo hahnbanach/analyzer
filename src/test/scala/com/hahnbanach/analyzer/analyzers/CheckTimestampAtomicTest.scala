@@ -58,5 +58,12 @@ class CheckTimestampAtomicTest extends AnyFlatSpec with Matchers {
     val analyzerValue = analyzer.evaluate("test query", data)
     analyzerValue.score should be (0.0)
   }
+  it should "return 1.0 and set a variable with the timestamp" in {
+    val data = AnalyzersData()
+    val analyzer = new DefaultAnalyzer("""tsNow("outName", "NOW_TS", "outPattern", "test."))""", restrictedArgs)
+    val analyzerRes = analyzer.evaluate("test query", data)
+    analyzerRes.score should be(1.0)
+    analyzerRes.data.stateData.variables.contains("test.NOW_TS")
+  }
 }
 

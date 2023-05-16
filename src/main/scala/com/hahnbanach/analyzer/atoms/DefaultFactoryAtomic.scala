@@ -4,7 +4,7 @@ package com.hahnbanach.analyzer.atoms
   * Created by mal on 20/02/2017.
   */
 
-import com.hahnbanach.analyzer.interfaces._
+import com.hahnbanach.analyzer.interfaces.*
 
 class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], Map[String, String]] {
   val functionsMap: Map[String, (List[String], Map[String, String]) => AbstractAtomic] = Map(
@@ -76,6 +76,8 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], Map[String, 
       new SetVariableAtomic(argument, restrictedArgs)),
     ("timeBetween", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new TimeBetweenAtomic(argument, restrictedArgs)),
+    ("tsNow", (argument: List[String], restrictedArgs: Map[String, String]) =>
+      new TsNowAtomic(argument, restrictedArgs)),
     ("toDouble", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new ToDoubleNumberAtomic(argument, restrictedArgs)),
     ("vOneKeyword", (argument: List[String], restrictedArgs: Map[String, String]) =>

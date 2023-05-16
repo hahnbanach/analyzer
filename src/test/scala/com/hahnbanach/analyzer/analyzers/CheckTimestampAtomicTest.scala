@@ -65,5 +65,59 @@ class CheckTimestampAtomicTest extends AnyFlatSpec with Matchers {
     analyzerRes.score should be(1.0)
     analyzerRes.data.stateData.variables.contains("test.NOW_TS")
   }
+  it should "return 1.0 adding two Long variables" in {
+    val data = AnalyzersData(
+      stateData = StateVariables(
+        variables = Map[String, String](
+          ("FIRST", "10"),
+          ("SECOND", "11")
+        )
+      )
+    )
+    val analyzer = new DefaultAnalyzer("""longAdd("VAR:first", "FIRST", "VAR:second", "SECOND", "outName", "SUM", "outPattern", "test.")""", restrictedArgs)
+    val analyzerRes = analyzer.evaluate("test query", data)
+    analyzerRes.score should be(1.0)
+    analyzerRes.data.stateData.variables.getOrElse("test.SUM", "") === "21"
+  }
+  it should "return 1.0 subtracting two Long variables" in {
+    val data = AnalyzersData(
+      stateData = StateVariables(
+        variables = Map[String, String](
+          ("FIRST", "11"),
+          ("SECOND", "10")
+        )
+      )
+    )
+    val analyzer = new DefaultAnalyzer("""longAdd("VAR:first", "FIRST", "VAR:second", "SECOND", "operator", "-", "outName", "SUB", "outPattern", "test.")""", restrictedArgs)
+    val analyzerRes = analyzer.evaluate("test query", data)
+    analyzerRes.score should be(1.0)
+    analyzerRes.data.stateData.variables.getOrElse("test.SUB", "") === "1"
+  }
+  it should "return 1.0 comparing two Long variables with A <= B" in {
+    val data = AnalyzersData(
+      stateData = StateVariables(
+        variables = Map[String, String](
+          ("FIRST", "10"),
+          ("SECOND", "11")
+        )
+      )
+    )
+    val analyzer = new DefaultAnalyzer("""longCompare("VAR:first", "FIRST", "VAR:second", "SECOND", "operator", "LessOrEqual")""", restrictedArgs)
+    val analyzerRes = analyzer.evaluate("test query", data)
+    analyzerRes.score should be(1.0)
+  }
+  it should "return 0.0 comparing two Long A > Nvariables" in {
+    val data = AnalyzersData(
+      stateData = StateVariables(
+        variables = Map[String, String](
+          ("FIRST", "13"),
+          ("SECOND", "11")
+        )
+      )
+    )
+    val analyzer = new DefaultAnalyzer("""longCompare("VAR:first", "FIRST", "VAR:second", "SECOND", "operator", "LessOrEqual")""", restrictedArgs)
+    val analyzerRes = analyzer.evaluate("test query", data)
+    analyzerRes.score should be(0.0)
+  }
 }
 

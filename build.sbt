@@ -76,7 +76,7 @@ developers := List(
 
 val projectId = sys.env.getOrElse("CI_PROJECT_ID", "1")
 val token = sys.env.getOrElse("CI_JOB_TOKEN", "unknown")
-credentials += Credentials("GitLab Packages Registry", s"gitlab.com", "Private-Token", s"$token")
+credentials += Credentials("GitLab Packages Registry", s"gitlab.com", "gitlab-ci-token", s"$token")
 publishTo := Some("GitLab Packages Registry" at s"https://gitlab.com/api/v4/projects/$projectId/packages/maven")
 
 licenses := Seq(("GPLv2", url("https://www.gnu.org/licenses/old-licenses/gpl-2.0.md")))

@@ -56,6 +56,10 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], Map[String, 
       new KeywordAtomic(argument, restrictedArgs)),
     ("lastTravStateIs", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new LastTravStateIsAtomic(argument, restrictedArgs)),
+    ("longAdd", (argument: List[String], restrictedArgs: Map[String, String]) =>
+      new LongAddAtomic(argument, restrictedArgs)),
+    ("longCompare", (argument: List[String], restrictedArgs: Map[String, String]) =>
+      new LongCompareAtomic(argument, restrictedArgs)),
     ("matchDateDDMMYYYY", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new MatchDateDDMMYYYYAtomic(argument, restrictedArgs)),
     ("matchPatternRegex", (argument: List[String], restrictedArgs: Map[String, String]) =>

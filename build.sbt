@@ -8,6 +8,7 @@ lazy val scala213 = "2.13.10"
 lazy val scala3 = "3.2.2"
 
 ThisBuild / scalaVersion := scala213
+ThisBuild / versionScheme := Some("semver-spec")
 
 crossScalaVersions := Seq(scala213)
 
@@ -72,6 +73,11 @@ developers := List(
     url   = url("http://www.elegans.io")
   )
 )
+
+val projectId = sys.env.getOrElse("CI_PROJECT_ID", "1")
+val token = sys.env.getOrElse("CI_JOB_TOKEN", "unknown")
+credentials += Credentials("GitLab Packages Registry", s"gitlab.com", "Private-Token", s"$token")
+publishTo := Some("GitLab Packages Registry" at s"https://gitlab.com/api/v4/projects/$projectId/packages/maven")
 
 licenses := Seq(("GPLv2", url("https://www.gnu.org/licenses/old-licenses/gpl-2.0.md")))
 

@@ -18,4 +18,3 @@ addSbtPlugin("com.github.sbt" % "sbt-release" % "1.1.0")
 
 //addSbtPlugin("org.xerial.sbt" %% "sbt-sonatype" % "3.9.2")
 
-//addSbtPlugin("com.gilcloud" % "sbt-gitlab" % "0.1.2")

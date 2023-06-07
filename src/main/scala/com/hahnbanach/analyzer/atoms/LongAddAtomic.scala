@@ -14,8 +14,8 @@ import com.hahnbanach.analyzer.util._
   * @param arguments see description below
   */
 class LongAddAtomic(val arguments: List[String], restrictedArgs: Map[String, String]) extends AbstractAtomic with KeyValueArgsBaseAtomic {
-  override def toString: String = "longCompare"
-  override val factoryName: String = "longCompare"
+  override def toString: String = "longAdd"
+  override val factoryName: String = "longAdd"
   val isEvaluateNormalized: Boolean = true
 
   override val argumentsDescription: Map[String, (String, Boolean, Option[String])] = Map(

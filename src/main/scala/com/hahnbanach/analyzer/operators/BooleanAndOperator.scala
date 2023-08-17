@@ -4,13 +4,17 @@ import cats.implicits._
 import com.hahnbanach.analyzer.entities.{AnalyzersData, Result, StateVariables}
 import com.hahnbanach.analyzer.expressions._
 
+import scala.util.{Failure, Success, Try}
+
 /**
-  * Created by mal on 21/02/2017.
-  */
+ * Created by mal on 21/02/2017.
+ * Rewritten by al on 16/08/2023
+ */
 
 class BooleanAndOperator(children: List[Expression]) extends AbstractOperator(children: List[Expression]) {
   override def toString: String = "BooleanAndOperator(" + children.mkString(", ") + ")"
-  def add(e: Expression, level: Int = 0): AbstractOperator = {
+
+  def add(e: Expression, level: Int): AbstractOperator = {
     if (level === 0) new BooleanAndOperator(e :: children)
     else {
       children.headOption match {
@@ -26,47 +30,28 @@ class BooleanAndOperator(children: List[Expression]) extends AbstractOperator(ch
   }
 
   def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
-    def booleanAnd(l: List[Expression]): Result = {
-      val valHead = l.headOption match {
-        case Some(arg) => arg.matches(query, data)
-        case _ => throw OperatorException("BooleanAndOperator: inner expression is empty")
+    children.foldRight(Result(score = 1.0d, data = data))((expression, acc) => { //evaluate in reverse order for backward compatibility
+      val evalRes = Try(expression.matches(query, data)) match {
+        case Success(value) => value
+        case Failure(exception) =>
+          throw OperatorException(toString, exception)
       }
-      if (l.tail.isEmpty) {
-        Result(score = valHead.score,
-          AnalyzersData(
-            context = data.context,
+      if(acc.score =!= 0.0d && evalRes.score =!= 0.0d) {
+        acc.copy(
+          score = evalRes.score * acc.score,
+          data = acc.data.copy(
             stateData = StateVariables(
               traversedStates = data.stateData.traversedStates,
-              // map summation order is important, as valHead elements must override pre-existing elements
-              variables = data.stateData.variables ++
-                valHead.data.stateData.variables
+              variables = acc.data.stateData.variables ++
+                evalRes.data.stateData.variables
             ),
-            internal = (data.internal.getOrElse(Map.empty) ++
-              valHead.data.internal.getOrElse(Map.empty)).some
+            internal = (acc.data.internal.getOrElse(Map.empty) ++
+              evalRes.data.internal.getOrElse(Map.empty)).some
           )
         )
       } else {
-        val valTail = booleanAnd(l.tail)
-        val finalScore = valHead.score * valTail.score
-        if (finalScore  =!= 1.0d) {
-          Result(score = finalScore, data = data)
-        } else {
-          Result(score = finalScore,
-            AnalyzersData(
-              context = data.context,
-              stateData = StateVariables(
-              traversedStates = data.stateData.traversedStates,
-              // map summation order is important, as valHead elements must override valTail existing elements
-              variables = valTail.data.stateData.variables ++
-                valHead.data.stateData.variables
-              ),
-              internal = (valTail.data.internal.getOrElse(Map.empty) ++
-                valHead.data.internal.getOrElse(Map.empty)).some
-            )
-          )
-        }
+        Result(score = 0.0d, data = data)
       }
-    }
-    booleanAnd(children)
+    })
   }
 }

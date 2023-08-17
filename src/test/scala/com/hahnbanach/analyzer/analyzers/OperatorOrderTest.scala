@@ -157,7 +157,7 @@ class OperatorOrderTest extends AnyFlatSpec with Matchers {
   }
   it should "trigger and extract both email address and customer message" in {
     val analyzer = new DefaultAnalyzer(
-      analyzerString(operatorBooleanOr,List(atomLastTravStateFalse, atomExtractEmail, atomExtractQuery)),
+      analyzerString(operatorBooleanAnd,List(atomLastTravStateTrue, atomExtractEmail, atomExtractQuery)),
       restrictedArgs
     )
     val analyzerValue = analyzer.evaluate(queryWithEmail, data)

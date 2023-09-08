@@ -54,4 +54,11 @@ class GenericAnalyzersTest extends AnyFlatSpec with Matchers {
     val firstOccurrenceOfFakeOperator = a2.firstOccurrenceOfOperator("FakeOperator")
     firstOccurrenceOfFakeOperator.shouldEqual(None)
   }
+
+  it should "calculate the md5 checksum of a string" in {
+    val analyzer = new DefaultAnalyzer("""checksum("input", "ciao calculate the md5", "checksum", "md5")""", restrictedArgs)
+    val res = analyzer.evaluate("")
+    res.score shouldEqual (1.0)
+    res.data.stateData.variables.getOrElse("local.CHECKSUM", "") shouldEqual "d05b5d787ac09f94a81fefb493472356"
+  }
 }

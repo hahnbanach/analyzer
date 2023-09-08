@@ -18,11 +18,16 @@ resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/r
 libraryDependencies ++= {
   val breezeVersion	= "2.1.0"
   val catsVersion = "2.9.0"
+  val roundeightsHasherVersion	= "1.2.2"
+  val scalaUuidVersion = "0.3.1"
   val scalatestVersion	= "3.2.16"
   val scoptVersion	= "4.1.0"
   val sprayJsonVersion = "1.3.6"
+
   Seq(
     "com.github.scopt" %% "scopt" % scoptVersion,
+    "com.outr" %% "hasher" % roundeightsHasherVersion,
+    "io.jvm.uuid" %% "scala-uuid" % scalaUuidVersion,
     "io.spray" %%  "spray-json" % sprayJsonVersion,
     "org.scalanlp" %% "breeze" % breezeVersion,
     "org.scalanlp" %% "breeze-natives" % breezeVersion,

@@ -1,8 +1,8 @@
 package com.hahnbanach.analyzer.atoms
 
 /**
-  * Created by mal on 20/02/2017.
-  */
+ * Created by mal on 20/02/2017.
+ */
 
 import com.hahnbanach.analyzer.interfaces.AtomicFactoryTrait
 
@@ -24,6 +24,8 @@ class DefaultFactoryAtomic extends AtomicFactoryTrait[List[String], Map[String, 
       new CheckMonthAtomic(argument, restrictedArgs)),
     ("checkMultipleDaysOfWeek", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new CheckMultipleDaysOfWeekAtomic(argument, restrictedArgs)),
+    ("checksum", (argument: List[String], restrictedArgs: Map[String, String]) =>
+      new ChecksumAtomic(argument, restrictedArgs)),
     ("checkTimestamp", (argument: List[String], restrictedArgs: Map[String, String]) =>
       new CheckTimestampAtomic(argument, restrictedArgs)),
     ("checkTimestampVariable", (argument: List[String], restrictedArgs: Map[String, String]) =>

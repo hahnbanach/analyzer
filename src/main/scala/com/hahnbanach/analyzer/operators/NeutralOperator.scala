@@ -43,6 +43,9 @@ class NeutralOperator(child: List[Expression]) extends AbstractOperator(child: L
       case _ => throw OperatorException("NeutralOperator: inner expression is empty")
     }
     Result(score = res.score, data = res.data.copy(
+      stateData = data.stateData.copy(
+        variables = data.stateData.variables ++ res.data.stateData.variables
+      ),
       internal = res.data.internal.getOrElse(Map.empty[String, Any]).some)
     )
   }

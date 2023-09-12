@@ -42,9 +42,14 @@ class NeutralOperator(child: List[Expression]) extends AbstractOperator(child: L
       case Some(arg) => arg.evaluate(query, data)
       case _ => throw OperatorException("NeutralOperator: inner expression is empty")
     }
+    val newVariables = if (res.score >= 0) {
+      res.data.stateData.variables
+    } else {
+      Map.empty[String, String]
+    }
     Result(score = res.score, data = res.data.copy(
       stateData = data.stateData.copy(
-        variables = data.stateData.variables ++ res.data.stateData.variables
+        variables = data.stateData.variables ++ newVariables
       ),
       internal = res.data.internal.getOrElse(Map.empty[String, Any]).some)
     )

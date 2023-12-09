@@ -40,6 +40,7 @@ libraryDependencies ++= {
 
 scalacOptions += "-deprecation"
 scalacOptions += "-feature"
+scalacOptions += "-source:3.0-migration"
 //scalacOptions += "-Ylog-classpath"
 Test / testOptions += Tests.Argument("-oF")
 

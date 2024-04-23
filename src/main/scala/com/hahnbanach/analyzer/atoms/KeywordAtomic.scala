@@ -17,7 +17,7 @@ class KeywordAtomic(val arguments: List[String], restrictedArgs: Map[String, Str
   }
   override def toString: String = "keyword(\"" + keyword + "\")"
   val isEvaluateNormalized: Boolean = true
-  private[this] val rx = {"""\b""" + keyword + """\b"""}.r
+  private val rx = {"""\b""" + keyword + """\b"""}.r
   def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val freq = rx.findAllIn(query).toList.length
     val queryLength = """\S+""".r.findAllIn(query).toList.length

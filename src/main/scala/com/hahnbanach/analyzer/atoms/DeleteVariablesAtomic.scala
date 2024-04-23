@@ -17,16 +17,16 @@ import scala.util.matching.Regex
 class DeleteVariablesAtomic(val arguments: List[String], restrictedArgs: Map[String, String]) extends AbstractAtomic {
   override def toString: String = "DeleteVariablesAtomic"
   val isEvaluateNormalized: Boolean = false
-  private[this] val usage: String = "regex=<regular expression>"
+  private val usage: String = "regex=<regular expression>"
 
-  private[this] val parameters: Map[String, String] =
+  private val parameters: Map[String, String] =
     arguments.map(_.split("=", 2))
       .filter(_.length === 2).map {
       case Array(v1,v2) => (v1,v2)
       case _ => throw ExceptionAtomic(s"$toString: bad parameter: $arguments")
     }.toMap
 
-  private[this] val regex: Regex = parameters.get("regex") match {
+  private val regex: Regex = parameters.get("regex") match {
     case Some(t) => t.r
     case _ => throw ExceptionAtomic(s"$toString: `regex` argument is mandatory ($usage)")
   }

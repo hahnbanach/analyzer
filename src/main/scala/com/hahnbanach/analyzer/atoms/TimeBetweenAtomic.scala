@@ -30,7 +30,7 @@ class TimeBetweenAtomic(val arguments: List[String],
 
   val regex: Regex = "([0-9]{1,2}):([0-9]{1,2})".r
 
-  private[this] def getHhMm(hhMM: Option[String], default: Option[LocalTime] = None): LocalTime = {
+  private def getHhMm(hhMM: Option[String], default: Option[LocalTime] = None): LocalTime = {
     hhMM match {
       case Some(v) => v match {
         case regex(timeH, timeM) =>
@@ -44,15 +44,15 @@ class TimeBetweenAtomic(val arguments: List[String],
     }
   }
 
-  private[this] val openTime = getHhMm(arguments.headOption)
-  private[this] val closeTime = getHhMm(arguments.lift(1))
+  private val openTime = getHhMm(arguments.headOption)
+  private val closeTime = getHhMm(arguments.lift(1))
 
-  private[this] val zone = Try(ZoneId.of(arguments.lift(2).getOrElse(""))) match {
+  private val zone = Try(ZoneId.of(arguments.lift(2).getOrElse(""))) match {
     case Success(value) => value
     case Failure(e) => throw ExceptionAtomic("Error parsing timezone", e)
   }
 
-  private[this] val compareTimeString: String = arguments.lift(3) match {
+  private val compareTimeString: String = arguments.lift(3) match {
     case Some(v) => v
     case _ => ""
   }

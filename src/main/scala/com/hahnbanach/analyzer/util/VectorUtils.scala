@@ -12,12 +12,14 @@ import cats.implicits._
 object VectorUtils {
 
   def meanArrayOfArrays(vectors: scala.Vector[scala.Vector[Double]]): scala.Vector[Double] = {
-    val matrix = DenseMatrix(vectors.map(_.toArray): _*)
+    val vectorOfArray = vectors.map(_.toArray)
+    val matrix = DenseMatrix(vectorOfArray*)
     (sum(matrix, Axis._0) / vectors.length.toDouble).t.toArray.toVector
   }
 
   def sumArrayOfArrays(vectors: scala.Vector[scala.Vector[Double]]): scala.Vector[Double] = {
-    val matrix = DenseMatrix(vectors.map(_.toArray): _*)
+    val vectorOfArray = vectors.map(_.toArray)
+    val matrix = DenseMatrix(vectorOfArray*)
     sum(matrix, Axis._0).t.toArray.toVector
   }
 

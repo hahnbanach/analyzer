@@ -18,12 +18,12 @@ trait KeyValueArgsBaseAtomic {
                          | ${argumentsDescription.map{case(k, v) => s"\t$k (${if(v._2) s"Optional with default(${v._3})" else "Mandatory"}): ${v._1}"}.mkString("\r")}
                          | """.stripMargin
 
-  private[this] val varNameRegex: Regex =
+  private val varNameRegex: Regex =
     new Regex(regex = "^(?:(VAR):)?([0-9A-Za-z-_\\.]+)$",
-      groupNames = List("isVar", "name").toIndexedSeq: _*
+      groupNames = List("isVar", "name").toIndexedSeq*
     )
 
-  private[this] def argsComponents(input: String): (String, Boolean) = {
+  private def argsComponents(input: String): (String, Boolean) = {
     varNameRegex.findFirstMatchIn(input) match {
       case Some(m) =>
         (m.group("name"), Option(m.group("isVar")).nonEmpty)

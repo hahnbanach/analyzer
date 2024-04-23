@@ -29,7 +29,7 @@ abstract class DefaultParser(command: String, restrictedArgs: Map[String, String
   val atomicFactory: AtomicFactoryTrait[List[String], Map[String, String]]
   val operatorFactory: OperatorFactoryTrait[List[Expression]]
 
-  private[this] val operator = gobbleCommands(command)
+  private val operator = gobbleCommands(command)
 
   override def toString: String = operator.toString
   /** Read a sentence and produce a score (the higher, the more confident)

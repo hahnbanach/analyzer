@@ -16,21 +16,21 @@ import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 class CopyVariableAtomic(val arguments: List[String], restrictedArgs: Map[String, String]) extends AbstractAtomic {
   override def toString: String = "CopyVariableAtomicCopyVariableAtomic"
   val isEvaluateNormalized: Boolean = false
-  private[this] val usage: String = "sourceVarname=<variableName>, destVarname=<variableName>"
+  private val usage: String = "sourceVarname=<variableName>, destVarname=<variableName>"
 
-  private[this] val parameters: Map[String, String] =
+  private val parameters: Map[String, String] =
     arguments.map(_.split("=", 2))
       .filter(_.length === 2).map {
       case Array(v1,v2) => (v1,v2)
       case _ => throw ExceptionAtomic(s"$toString: bad parameter: $arguments")
     }.toMap
 
-  private[this] val sourceVarname: String = parameters.get("sourceVarname") match {
+  private val sourceVarname: String = parameters.get("sourceVarname") match {
     case Some(t) => t
     case _ => throw ExceptionAtomic(s"$toString: `sourceVarname` argument is mandatory ($usage)")
   }
 
-  private[this] val destVarname: String = parameters.get("destVarname") match {
+  private val destVarname: String = parameters.get("destVarname") match {
     case Some(t) => t
     case _ => throw ExceptionAtomic(s"$toString: `destVarname` argument is mandatory ($usage)")
   }

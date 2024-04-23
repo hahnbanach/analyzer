@@ -35,7 +35,7 @@ class CountStateInHistoryAtomic(val arguments: List[String],
   val maxContext: Map[String, String] => Option[String] = optParameter("maxContext")
   val floor: Map[String, String] => Option[String] = optParameter("floor")
 
-  private[this] val nRegex: Regex = "^([0-9]+)$".r
+  private val nRegex: Regex = "^([0-9]+)$".r
 
   def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val stateName = state(data.stateData.variables)

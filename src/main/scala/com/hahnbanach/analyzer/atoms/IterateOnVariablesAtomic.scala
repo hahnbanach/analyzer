@@ -33,33 +33,33 @@ import scala.util.matching.Regex
 class IterateOnVariablesAtomic(val arguments: List[String], restrictedArgs: Map[String, String]) extends AbstractAtomic {
   override def toString: String = "IterateOnVariablesAtomic"
   val isEvaluateNormalized: Boolean = true
-  private[this] val usage: String =
+  private val usage: String =
     "countersPattern=<variables prefix>, variablesPattern=<variables prefix>, destinationVarname=<dest. variable name>," +
       "[order=\"asc\"|\"desc\"]"
 
-  private[this] val parameters: Map[String, String] =
+  private val parameters: Map[String, String] =
     arguments.map(_.split("=", 2))
       .filter(_.length === 2).map {
       case Array(v1,v2) => (v1,v2)
       case _ => throw ExceptionAtomic(s"$toString: bad parameter: $arguments")
     }.toMap
 
-  private[this] val countersPattern: String = parameters.get("countersPattern") match {
+  private val countersPattern: String = parameters.get("countersPattern") match {
     case Some(t) => t
     case _ => throw ExceptionAtomic(s"$toString: `countersPattern` argument is mandatory ($usage)")
   }
 
-  private[this] val destinationVarname: String = parameters.get("destinationVarname") match {
+  private val destinationVarname: String = parameters.get("destinationVarname") match {
     case Some(t) => t
     case _ => "A__TEMP__.VARIABLES_ITERATION_VALUE"
   }
 
-  private[this] val variablesPattern: String = parameters.get("variablesPattern") match {
+  private val variablesPattern: String = parameters.get("variablesPattern") match {
     case Some(t) => t
     case _ => throw ExceptionAtomic(s"$toString: `variablesPattern` argument is mandatory ($usage)")
   }
 
-  private[this] val counterIncrement: Int = parameters.get("order") match {
+  private val counterIncrement: Int = parameters.get("order") match {
     case Some(t) => t match {
       case "desc" => -1
       case _ => 1
@@ -67,10 +67,10 @@ class IterateOnVariablesAtomic(val arguments: List[String], restrictedArgs: Map[
     case _ => 1
   }
 
-  private[this] val variableNamePatternRegex: Regex = "^([A-Za-z-._0-9]+)_([0-9]+)$".r
+  private val variableNamePatternRegex: Regex = "^([A-Za-z-._0-9]+)_([0-9]+)$".r
 
-  private[this] val cursorVarname = s"${countersPattern}_CURSOR"
-  private[this] val endIdxVarname = s"${countersPattern}_ENDIDX"
+  private val cursorVarname = s"${countersPattern}_CURSOR"
+  private val endIdxVarname = s"${countersPattern}_ENDIDX"
   /** evaluate the atom and set the destination variable
    *
    * @param query the user query

@@ -20,7 +20,7 @@ class RegularExpressionAtomic(arguments: List[String], restrictedArgs: Map[Strin
   }
   override def toString: String = "regex(\"" + re + "\")"
   val isEvaluateNormalized: Boolean = false
-  private[this] val rx = re.r
+  private val rx = re.r
 
   def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val score = rx.findAllIn(query).toList.length

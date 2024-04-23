@@ -5,13 +5,13 @@ maintainer := "angelo.leto@hahnbanach.com"
 
 
 lazy val scala213 = "2.13.13"
-lazy val scala3 = "3.3.3"
+lazy val scala3 = "3.4.1"
 
 
 ThisBuild / scalaVersion := scala3
 ThisBuild / versionScheme := Some("semver-spec")
 
-crossScalaVersions := Seq(scala3, scala213)
+crossScalaVersions := Seq(scala3)
 
 resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/releases/",
   Resolver.bintrayRepo("hseeberger", "maven"))
@@ -62,7 +62,7 @@ Test / publishArtifact := false
 
 pomIncludeRepository := { _ => false }
 
-homepage := Some(url("http://www.elegans.io"))
+homepage := Some(url("http://www.mrcall.ai"))
 
 scmInfo := Some(
   ScmInfo(
@@ -75,8 +75,8 @@ developers := List(
   Developer(
     id    = "angleto",
     name  = "Angelo Leto",
-    email = "angelo.leto@elegans.io",
-    url   = url("http://www.elegans.io")
+    email = "angelo.leto@mrcall.ai",
+    url   = url("http://www.mrcall.ai")
   )
 )
 

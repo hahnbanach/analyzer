@@ -19,7 +19,7 @@ resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/r
 libraryDependencies ++= {
   val breezeVersion	= "2.1.0"
   val catsVersion = "2.10.0"
-  val roundeightsHasherVersion	= "1.2.2"
+  val roundeightsHasherVersion	= "1.2.3"
   val scalaUuidVersion = "0.3.1"
   val scalatestVersion	= "3.2.17"
   val scoptVersion	= "4.1.0"
@@ -28,7 +28,7 @@ libraryDependencies ++= {
   Seq(
     "com.github.scopt" %% "scopt" % scoptVersion,
     "com.outr" %% "hasher" % roundeightsHasherVersion,
-    "io.jvm.uuid" %% "scala-uuid" % scalaUuidVersion,
+    //"io.jvm.uuid" %% "scala-uuid" % scalaUuidVersion,
     "io.spray" %%  "spray-json" % sprayJsonVersion,
     "org.scalanlp" %% "breeze" % breezeVersion,
     "org.scalanlp" %% "breeze-natives" % breezeVersion,
@@ -40,7 +40,6 @@ libraryDependencies ++= {
 
 scalacOptions += "-deprecation"
 scalacOptions += "-feature"
-scalacOptions += "-source:3.0-migration"
 //scalacOptions += "-Ylog-classpath"
 Test / testOptions += Tests.Argument("-oF")
 

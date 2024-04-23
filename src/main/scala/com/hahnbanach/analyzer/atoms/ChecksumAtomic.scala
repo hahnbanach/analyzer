@@ -3,7 +3,7 @@ package com.hahnbanach.analyzer.atoms
 import cats.implicits._
 import com.hahnbanach.analyzer.entities.{AnalyzersData, Result}
 import com.roundeights.hasher.Implicits._
-import io.jvm.uuid.UUID
+import java.util.UUID
 
 /**
  * Created by angelo on 08/09/23.

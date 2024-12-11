@@ -1,6 +1,6 @@
 package com.hahnbanach.analyzer.operators
 
-import com.hahnbanach.analyzer.expressions.*
+import com.hahnbanach.analyzer.expressions._
 
 /** Operators are built to be nested through the add method.
  *

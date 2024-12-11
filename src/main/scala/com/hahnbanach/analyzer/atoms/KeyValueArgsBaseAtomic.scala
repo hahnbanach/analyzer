@@ -19,9 +19,7 @@ trait KeyValueArgsBaseAtomic {
                          | """.stripMargin
 
   private val varNameRegex: Regex =
-    new Regex(regex = "^(?:(VAR):)?([0-9A-Za-z-_\\.]+)$",
-      groupNames = List("isVar", "name").toIndexedSeq*
-    )
+    new Regex(regex = "^(?:(VAR):)?([0-9A-Za-z-_\\.]+)$", "isVar", "name")
 
   private def argsComponents(input: String): (String, Boolean) = {
     varNameRegex.findFirstMatchIn(input) match {

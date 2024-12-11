@@ -4,12 +4,12 @@ package com.hahnbanach.analyzer.util
  * Created by Angelo Leto <angelo.leto@elegans.io> on 23/06/17.
  */
 
-import cats.implicits.*
+import cats.implicits._
 
 import java.util.regex.PatternSyntaxException
 import scala.collection.immutable.{Map, Seq}
 import scala.util.control.NonFatal
-import scala.util.matching.*
+import scala.util.matching._
 import scala.util.{Failure, Success, Try}
 
 /** A generic pattern extraction utility class, it extract named patterns matching a given regex
@@ -66,8 +66,9 @@ class PatternExtractionRegex(declaration: String) extends
       throw PatternExtractionDeclarationParsingException(message)
   }
 
+  val groupNames = groups.toIndexedSeq
   val regularExpression: Try[Regex] = Try(
-    new Regex(regex = expressionDeclaration, groupNames = groups.toIndexedSeq*)) recover {
+    new Regex(regex = expressionDeclaration, groupNames = groupNames:_*)) recover {
     case e: PatternSyntaxException =>
       throw PatternExtractionParsingException("Regex parsing exception: Description(" + e.getDescription
         + ") Index(" + e.getIndex + ") Message(" + e.getMessage + ") Pattern(" + e.getPattern + ")", e)

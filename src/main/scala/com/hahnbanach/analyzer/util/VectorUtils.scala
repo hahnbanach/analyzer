@@ -13,13 +13,13 @@ object VectorUtils {
 
   def meanArrayOfArrays(vectors: scala.Vector[scala.Vector[Double]]): scala.Vector[Double] = {
     val vectorOfArray = vectors.map(_.toArray)
-    val matrix = DenseMatrix(vectorOfArray*)
+    val matrix = DenseMatrix(vectorOfArray:_*)
     (sum(matrix, Axis._0) / vectors.length.toDouble).t.toArray.toVector
   }
 
   def sumArrayOfArrays(vectors: scala.Vector[scala.Vector[Double]]): scala.Vector[Double] = {
     val vectorOfArray = vectors.map(_.toArray)
-    val matrix = DenseMatrix(vectorOfArray*)
+    val matrix = DenseMatrix(vectorOfArray:_*)
     sum(matrix, Axis._0).t.toArray.toVector
   }
 

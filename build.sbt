@@ -4,23 +4,23 @@ organization := "com.hahnbanach"
 maintainer := "angelo.leto@hahnbanach.com"
 
 
-lazy val scala213 = "2.13.13"
-lazy val scala3 = "3.4.1"
+lazy val scala2 = "2.13.15"
+lazy val scala3 = "3.3.4"
 
 
 ThisBuild / scalaVersion := scala3
 ThisBuild / versionScheme := Some("semver-spec")
 
-crossScalaVersions := Seq(scala3)
+crossScalaVersions := Seq(scala3, scala2)
 
 resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/releases/",
   Resolver.bintrayRepo("hseeberger", "maven"))
 
 libraryDependencies ++= {
   val breezeVersion	= "2.1.0"
-  val catsVersion = "2.10.0"
+  val catsVersion = "2.12.0"
   val roundeightsHasherVersion	= "1.2.3"
-  val scalaUuidVersion = "0.3.1"
+  //val scalaUuidVersion = "0.3.1"
   val scalatestVersion	= "3.2.17"
   val scoptVersion	= "4.1.0"
   val sprayJsonVersion = "1.3.6"
@@ -62,7 +62,7 @@ Test / publishArtifact := false
 
 pomIncludeRepository := { _ => false }
 
-homepage := Some(url("http://www.mrcall.ai"))
+homepage := Some(url("http://www.hahnbanach.com"))
 
 scmInfo := Some(
   ScmInfo(
@@ -75,8 +75,8 @@ developers := List(
   Developer(
     id    = "angleto",
     name  = "Angelo Leto",
-    email = "angelo.leto@mrcall.ai",
-    url   = url("http://www.mrcall.ai")
+    email = "angelo.leto@hahnbanach.com",
+    url   = url("http://www.hahnbanach.com")
   )
 )
 

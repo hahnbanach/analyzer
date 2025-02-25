@@ -32,7 +32,7 @@ class GteOperator(child: List[Expression]) extends AbstractOperator(child: List[
     }
   }
 
-  def evaluate(query: String, data: AnalyzersData = new AnalyzersData): Result = {
+  def evaluate(query: String, data: AnalyzersData = AnalyzersData()): Result = {
     val secondArgument = child.headOption match {
       case Some(t) => t
       case _ =>

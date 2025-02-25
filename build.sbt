@@ -11,7 +11,7 @@ lazy val scala3 = "3.3.4"
 ThisBuild / scalaVersion := scala2
 ThisBuild / versionScheme := Some("semver-spec")
 
-crossScalaVersions := Seq(scala3, scala2)
+crossScalaVersions := Seq(scala2)
 
 resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/releases/",
   Resolver.bintrayRepo("hseeberger", "maven"))

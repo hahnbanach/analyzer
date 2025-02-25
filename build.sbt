@@ -4,11 +4,11 @@ organization := "com.hahnbanach"
 maintainer := "angelo.leto@hahnbanach.com"
 
 
-lazy val scala2 = "2.13.15"
+lazy val scala2 = "2.13.16"
 lazy val scala3 = "3.3.4"
 
 
-ThisBuild / scalaVersion := scala3
+ThisBuild / scalaVersion := scala2
 ThisBuild / versionScheme := Some("semver-spec")
 
 crossScalaVersions := Seq(scala3, scala2)
@@ -18,10 +18,10 @@ resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/r
 
 libraryDependencies ++= {
   val breezeVersion	= "2.1.0"
-  val catsVersion = "2.12.0"
+  val catsVersion = "2.13.0"
   val roundeightsHasherVersion	= "1.2.3"
   //val scalaUuidVersion = "0.3.1"
-  val scalatestVersion	= "3.2.17"
+  val scalatestVersion	= "3.2.19"
   val scoptVersion	= "4.1.0"
   val sprayJsonVersion = "1.3.6"
 

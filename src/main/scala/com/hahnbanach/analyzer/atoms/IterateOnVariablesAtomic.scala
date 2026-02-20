@@ -89,7 +89,7 @@ class IterateOnVariablesAtomic(val arguments: List[String], restrictedArgs: Map[
           val selectedvariablesCount = runtimeVariables
             .filter(variablesPair => variablesPair._1.matches(s"${variablesPattern}_[0-9]+"))
             .map(value => {
-              val variableNamePatternRegex(_, orderNumber) = value._1
+              val variableNamePatternRegex(_, orderNumber) = value._1: @unchecked
               (value, orderNumber.toInt)
             }).size
           if(selectedvariablesCount > 0) {

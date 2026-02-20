@@ -5,13 +5,13 @@ maintainer := "angelo.leto@hahnbanach.com"
 
 
 lazy val scala2 = "2.13.16"
-lazy val scala3 = "3.3.4"
+lazy val scala3 = "3.8.1"
 
 
-ThisBuild / scalaVersion := scala2
+ThisBuild / scalaVersion := scala3
 ThisBuild / versionScheme := Some("semver-spec")
 
-crossScalaVersions := Seq(scala2)
+crossScalaVersions := Seq(scala3, scala2)
 
 resolvers ++= Seq("Typesafe Repository" at "https://repo.typesafe.com/typesafe/releases/",
   Resolver.bintrayRepo("hseeberger", "maven"))

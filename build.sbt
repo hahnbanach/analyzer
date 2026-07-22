@@ -66,8 +66,8 @@ homepage := Some(url("http://www.hahnbanach.com"))
 
 scmInfo := Some(
   ScmInfo(
-    url("https://gitlab.com/hahnbanach/analyzer"),
-    "scm:git@gitlab.com:hahnbanach/analyzer.git"
+    url("https://github.com/hahnbanach/analyzer"),
+    "scm:git@github.com:hahnbanach/analyzer.git"
   )
 )
 
@@ -80,10 +80,13 @@ developers := List(
   )
 )
 
-val projectId = sys.env.getOrElse("CI_PROJECT_ID", "1")
-val token = sys.env.getOrElse("CI_JOB_TOKEN", "unknown")
-credentials += Credentials("GitLab Packages Registry", s"gitlab.com", "gitlab-ci-token", s"$token")
-publishTo := Some("GitLab Packages Registry" at s"https://gitlab.com/api/v4/projects/$projectId/packages/maven")
+// Publish to GitHub Packages (Maven) under hahnbanach/analyzer.
+// Auth from env: GH_PACKAGES_TOKEN (write:packages) / GH_PACKAGES_USER, falling back to the
+// GitHub Actions built-ins GITHUB_TOKEN / GITHUB_ACTOR.
+val ghPackagesUser = sys.env.getOrElse("GH_PACKAGES_USER", sys.env.getOrElse("GITHUB_ACTOR", "unknown"))
+val ghPackagesToken = sys.env.getOrElse("GH_PACKAGES_TOKEN", sys.env.getOrElse("GITHUB_TOKEN", "unknown"))
+credentials += Credentials("GitHub Package Registry", "maven.pkg.github.com", ghPackagesUser, ghPackagesToken)
+publishTo := Some("GitHub Packages" at "https://maven.pkg.github.com/hahnbanach/analyzer")
 
 licenses := Seq(("GPLv2", url("https://www.gnu.org/licenses/old-licenses/gpl-2.0.md")))
 

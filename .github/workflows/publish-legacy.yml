@@ -1,0 +1,46 @@
+# One-off republish of an OLD analyzer tag (one that predates this CI and still carries the former
+# GitLab publishTo) to GitHub Packages. Checks out the tag (GitVersioning derives the release
+# version, e.g. v7.2.1 -> 7.2.1), overrides publishTo + credentials to GitHub Packages at build
+# time, and cross-publishes. Runs on the shared self-hosted Scaleway runner.
+#
+# Trigger:  gh workflow run publish-legacy.yml -f ref=v7.2.1     (or via the Actions UI)
+
+name: publish-legacy
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Tag to check out and publish (e.g. v7.2.1)'
+        required: true
+        default: 'v7.2.1'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: [self-hosted, arm64]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+          fetch-depth: 0   # full history + tags so GitVersioning derives the release version
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: sbt
+
+      - uses: sbt/setup-sbt@v1
+
+      - name: Cross-publish ${{ inputs.ref }} to GitHub Packages (override publishTo)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          sbt \
+            'set every publishTo := Some("GitHub Packages".at("https://maven.pkg.github.com/hahnbanach/analyzer"))' \
+            'set every credentials += Credentials("GitHub Package Registry", "maven.pkg.github.com", sys.env.getOrElse("GITHUB_ACTOR", ""), sys.env.getOrElse("GITHUB_TOKEN", ""))' \
+            +publish

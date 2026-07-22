@@ -44,5 +44,5 @@ jobs:
         run: |
           sbt \
             'set every publishTo := Some("GitHub Packages".at("https://maven.pkg.github.com/hahnbanach/analyzer"))' \
-            'set every credentials += Credentials("GitHub Package Registry", "maven.pkg.github.com", sys.env.getOrElse("GITHUB_ACTOR", ""), sys.env.getOrElse("GITHUB_TOKEN", ""))' \
+            'set credentials += Credentials("GitHub Package Registry", "maven.pkg.github.com", sys.env.getOrElse("GITHUB_ACTOR", ""), sys.env.getOrElse("GITHUB_TOKEN", ""))' \
             +publish

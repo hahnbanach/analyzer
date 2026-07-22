@@ -1,0 +1,42 @@
+# analyzer CI — port of the former .gitlab-ci.yml (sbt test + sbt +publish on tags).
+# Runs on the shared self-hosted Scaleway runner (org-level `hahnbanach`, arm64) to avoid
+# GitHub-hosted compute cost on this private repo. analyzer is a pure JVM library, so arm64 is fine.
+# Publishing targets GitHub Packages (hahnbanach/analyzer) using the built-in GITHUB_TOKEN,
+# so no external secret is required (build.sbt reads GH_PACKAGES_USER/GH_PACKAGES_TOKEN,
+# falling back to GITHUB_ACTOR/GITHUB_TOKEN which Actions provides).
+
+name: ci
+
+on:
+  push:
+    branches: ['**']
+    tags: ['v*']
+  pull_request:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: [self-hosted, arm64]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: sbt
+
+      - uses: sbt/setup-sbt@v1
+
+      - name: Test (default Scala)
+        run: sbt test
+
+      # Cross-publish (Scala 2.13 + 3) to GitHub Packages only on version tags.
+      - name: Cross-publish to GitHub Packages
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: sbt +publish

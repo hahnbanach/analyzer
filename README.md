@@ -1,9 +1,7 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8aa198cbdf924c7aa338d753097885c9)](https://www.codacy.com/gh/GetJenny/analyzer?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=GetJenny/analyzer&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/8aa198cbdf924c7aa338d753097885c9)](https://www.codacy.com/gh/GetJenny/analyzer?utm_source=github.com&utm_medium=referral&utm_content=GetJenny/analyzer&utm_campaign=Badge_Coverage)
-[![Build Status](https://travis-ci.org/GetJenny/analyzer.png)](https://travis-ci.org/GetJenny/analyzer)
+[![CI](https://github.com/hahnbanach/analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/hahnbanach/analyzer/actions/workflows/ci.yml)
+[![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+[![Scala](https://img.shields.io/badge/Scala-2.13%20%7C%203-DC322F.svg?logo=scala&logoColor=white)](https://www.scala-lang.org/)
 [![Project status](https://img.shields.io/badge/status-active-brightgreen.svg)](#status)
-[![Join the chat at https://gitter.im/GetJenny-StarChat/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/GetJenny-StarChat/Lobby)
-[![Open Source Helpers](https://www.codetriage.com/getjenny/analyzer/badges/users.svg)](https://www.codetriage.com/getjenny/analyzer)
 
 # Analyzer language and functions
 

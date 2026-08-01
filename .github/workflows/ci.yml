@@ -1,6 +1,9 @@
 # analyzer CI — port of the former .gitlab-ci.yml (sbt test + sbt +publish on tags).
-# Runs on the shared self-hosted Scaleway runner (org-level `hahnbanach`, arm64) to avoid
-# GitHub-hosted compute cost on this private repo. analyzer is a pure JVM library, so arm64 is fine.
+# Runs on GitHub-hosted runners: this repo is public, so they cost nothing, and a pure JVM
+# library has no reason to need arm64. The org's self-hosted Scaleway runner is deliberately
+# not used — its group refuses public repositories, which is why v8.0.2 and v8.0.3 sat queued
+# for a day and were never published — and it stays free for starchat, which is private and
+# does need it.
 # Publishing targets GitHub Packages (hahnbanach/analyzer) using the built-in GITHUB_TOKEN,
 # so no external secret is required (build.sbt reads GH_PACKAGES_USER/GH_PACKAGES_TOKEN,
 # falling back to GITHUB_ACTOR/GITHUB_TOKEN which Actions provides).
@@ -28,7 +31,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: [self-hosted, arm64]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
 
